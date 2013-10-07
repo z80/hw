@@ -7,7 +7,12 @@ def starts_with_consonant?( s )
   if (s.length < 1)
     return false
   end
-  res = s.match( /^[^AEIOU].+$/i )
+  # Consists of letters only.
+  res = s.match( /^[a-z]+$/i )
+  if ( !res )
+    return false
+  end
+  res = s.match( /^[^AEIOU]\w*$/i )
   if ( !res )
     return false
   end
@@ -44,7 +49,7 @@ end
 #puts "Tests: "
 #puts hello( "dasda" )
 #puts "Consonant test: "
-#puts starts_with_consonant?( "bBfds" )
+#puts starts_with_consonant?( "dsa" )
 #puts "binary multiple of 4 test: "
 #puts binary_multiple_of_4?( "0000" )
 
