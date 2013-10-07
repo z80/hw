@@ -4,6 +4,7 @@ class BookInStock
   def initialize( isbn, price )
     if ( ( !isbn ) || 
          ( isbn.length < 1 ) || 
+         ( isbn == "" ) || 
          ( !price ) || 
          ( price <= 0 ) )
       raise ArgumentError "Wrong argument"
