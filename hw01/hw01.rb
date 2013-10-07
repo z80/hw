@@ -18,7 +18,7 @@ def sum_to_n?( input, n )
         return ( n == 0)
     end
     if ( input.length < 2 )
-        return ( n == 2 * input[0] )
+        return false
     end
     for i in 0..(input.length-2)
         for j in (i+1)..(input.length-1)
@@ -33,16 +33,16 @@ end
 
 #if (__FILE__ == $0)
     # Just sum
-    puts "sum check"
-    puts sum( [ 1, 2, 3 ] )
+#puts "sum check"
+#    puts sum( [ 1, 2, 3 ] )
     # Sum two largest values.
-    puts "max_2_sum test"
-    puts max_2_sum( [1, 2, 5, 8, 2, 9] )
-    puts max_2_sum( [2] )
+#    puts "max_2_sum test"
+#    puts max_2_sum( [1, 2, 5, 8, 2, 9] )
+#    puts max_2_sum( [2] )
     # Sum_to_n? test
-    puts "sum_to_n test"
-    puts sum_to_n?( [ 1, 2, 3, 4, 5], 3 )
-    puts sum_to_n?( [23], 46 )
+#    puts "sum_to_n test"
+#    puts sum_to_n?( [ 1, 2, 3, 4, 5], 3 )
+#    puts sum_to_n?( [23], 46 )
 
     #[1, 2].each do |i|
     #    puts i
