@@ -22,7 +22,13 @@ def binary_multiple_of_4?( s )
   if ( !res )
     return false
   end
-  res = s.match( /^[01]*00$/ )
+  # Should ensure there are ones in the number.
+  res = s.match( /1/ )
+  if ( !res )
+    return false
+  end
+  # If it is divided by 4 least two digits are zeros.
+  res = s.match( /^[01]+00$/ )
   if ( !res )
     return false
   end
@@ -40,5 +46,5 @@ end
 #puts "Consonant test: "
 #puts starts_with_consonant?( "bBfds" )
 #puts "binary multiple of 4 test: "
-#puts binary_multiple_of_4?( "0011100" )
+#puts binary_multiple_of_4?( "0000" )
 
