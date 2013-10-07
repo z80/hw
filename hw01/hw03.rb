@@ -7,7 +7,7 @@ class BookInStock
          ( isbn == "" ) || 
          ( !price ) || 
          ( price <= 0 ) )
-      raise ArgumentError "Wrong argument"
+      raise ArgumentError
     end
     @isbn  = isbn
     @price = price
@@ -35,9 +35,9 @@ class BookInStock
 end
 
 # Tests:
-#a = BookInStock.new( "dsaa", 12312 )
-#a.price = 123
-#a.isbn = "321"
-#puts a.price
-#puts a.isbn
-#puts a.price_as_string
+a = BookInStock.new( "a", 10 )
+a.price = 123
+a.isbn = "321"
+puts a.price
+puts a.isbn
+puts a.price_as_string
