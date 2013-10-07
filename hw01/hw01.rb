@@ -18,15 +18,15 @@ def sum_to_n?( input, n )
         return ( n == 0)
     end
     if ( input.length < 2 )
-	return ( n == 2 * input[0] )
+        return ( n == 2 * input[0] )
     end
     for i in 0..(input.length-2)
         for j in (i+1)..(input.length-1)
             s = input[i] + input[j]
-	    if ( s == n )
-	        return true
+            if ( s == n )
+                return true
             end
-	end
+        end
     end
     return false
 end
