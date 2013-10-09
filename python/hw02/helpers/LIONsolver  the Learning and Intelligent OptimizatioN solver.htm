@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<title>LIONsolver: the Learning and Intelligent OptimizatioN solver</title>
+	<meta name="viewport" content="width=1020">
+	<meta name="keywords" content="Learning and Intelligent OptimizatioN, grapheur, LION, reactive businessintelligence, RBI">
+	<meta name="keywords" content="Datamining, neural networks, interactive, visualization, business, intelligence">
+	<meta http-equiv="content-language" content="en">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold"-->
+	<link rel="stylesheet" type="text/css" href="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/style.css">
+	<link rel="stylesheet" href="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/bx_styles.css" type="text/css">
+	<link rel="shortcut icon" href="http://lionsolver.com/static/imgs/favicon.png">
+	<script src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/jquery-1.js"></script>
+	<script type="text/javascript" src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/jquery.js"></script>
+	<script type="text/javascript" src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/jquery_002.js"></script>
+	<!-- ifnotequal request.path "/"
+	<script type="text/javascript" src="/static/js/prototype.js"></script>
+	<script type="text/javascript" src="/static/js/scriptaculous.js?load=effects,builder"></script>
+	<script type="text/javascript" src="/static/js/lightbox.js"></script>
+	endifnotequal-->
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#slider").bxSlider({
+				auto: true,
+				pause: 6000,
+				autoHover: true,
+				pager: true,
+				pagerType: 'full',
+				randomStart: true,
+				mode: 'fade'
+			})
+		});
+	</script> 
+
+	
+	
+
+</head>
+<body>
+	<div class="base">
+		
+			<div class="header">
+				<div class="login" style="float:right;">
+					<p>
+						
+						<a href="http://twitter.com/LIONsolver" target="_blank"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/twitter-small.png"></a> &nbsp;
+						<a href="http://www.linkedin.com/company/lionsolver-inc-?trk=hb_tab_compy_id_2826141" target="_blank"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/linkedin-small.png"></a>
+					</p>
+				</div>
+
+				<div class="logo">
+					<a href="http://lionsolver.com/">
+						<img class="logo" src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/logo.jpg" alt="LIONsolver" style="border-radius:3px; border:1px solid #adadad; float:left;" width="180">
+					</a>
+					<div class="catch">
+					</div>
+				</div>
+
+				<div id="nav-container">
+					<div id="nav">
+						<ul class="upper_row">
+							<li><a class="top-nav-link" href="http://lionsolver.com/info/solutions/">Solutions</a>
+								<ul class="second_row">
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/product/">Product</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/technology/">Technology</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/cases/">Use cases</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/services/">Services</a></li>
+								</ul>
+							</li>
+							<li><a class="top-nav-link" href="http://lionsolver.com/info/community/">Community</a>
+								<ul class="second_row">
+									<li><a class="top-nav-link" href="http://lionsolver.com/LIONbook/">LIONbook</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/tutorials/">Tutorials</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/videos/">Videos</a></li>
+								</ul>
+							</li>
+							<li><a class="top-nav-link" href="http://lionsolver.com/info/company/">Company</a>
+								<ul class="second_row">
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/advisors/">People</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/jobs/">Jobs</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.com/contact/">Contact</a></li>
+								</ul>
+							</li>
+							<li><a class="top-nav-link" href="http://lionsolver.com/info/news/">News</a>
+								<ul class="second_row">
+									<li><a class="top-nav-link" href="http://lionsolver.com/info/news/">Latest news</a></li>
+									<li><a class="top-nav-link" href="http://lionsolver.blogspot.it/" target="_blank">Blog</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="page_home">  <div class="page">
+				
+
+<style>
+p.question {
+	margin-top: 1em;
+	font-weight: bold;
+}
+p.answer {
+}
+h3 {
+font-weight:bold;
+}
+
+</style>
+
+<h1>Homework 2: Preparation</h1>
+<p>
+This page contains some hints on how to use LIONsolver and Python for
+solving the exercises of homework 2 (<a href="http://lionsolver.com/LearningFromData/" target="_blank">
+Learning from Data course </a>).
+</p>
+
+<h3>Hoeffding Inequality</h3>
+<p>
+The first exercise is about implementing a computer simulation for
+flipping a set of coins.
+Here you can find <a href="http://lionsolver.com/static/graph-files/lfd/hw2/hoeffding.py" target="_blank">a Python template</a> which you can interface with
+LIONsolver as a Parametric Table, (as you did for <a href="http://lionsolver.com/LearningFromData/lionsolver_python/" target="_blank">the previous homework</a>).
+The script requires three input parameters:
+</p>
+<ul>
+  <li>Number of tests (default 100000)</li>
+  <li>Number of coins (defualt 1000)</li>
+  <li>Number of times to flip each coin (default 10)</li>
+</ul>
+<p>
+The script outputs a table containing the frequency of heads
+(fictional, for now) obtained by the three coins specified by the
+exercise (c_1, c_Rand, c_Min).
+</p>
+<p>
+The average can be obtained by plotting the content of the table with a bubblechart and enabling the
+Polynomial fit of degree 0.
+</p>
+
+<a href="http://lionsolver.com/static/images/lfd/hw2_hint/hw2_ex1_1.png" target="_blank">
+<img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/hw2_ex1_1_th.png" witdth="640" height="388">
+</a>
+
+
+
+
+
+
+
+			</div>
+
+			
+
+			<div class="linkHeader">
+				<div style="float:left;">
+					news<br>
+					media
+					<hr>
+				</div>
+				<div style="float:right; text-align:right;">
+					get<br>
+					LIONsolver
+					<hr>
+				</div>
+			</div>
+
+			<div class="links">
+				<div class="sidebox" style="width:250px;">
+					<p>
+						</p><div>
+							<a href="http://lionsolver.com/licensing/download/">
+								<img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/downloadEvalR.png" alt="Download Evaluation" width="225">
+							</a>
+						</div>
+						<div>
+							<a href="http://lionsolver.com/store/main/">
+								<img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/buyLicenseR.png" alt="Buy License" width="225">
+							</a>
+						</div>
+					<p></p>
+				</div>
+
+				<div class="sidebox" style="width:650px;">
+
+					<p>
+						</p><div>
+							<a href="http://lionsolver.com/LIONbook/"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/square_lb.jpg" alt="Download the LIONbook" style="height:70px; margin-right:20px;"></a>
+							<a href="http://lionsolver.com/info/news/" target="_blank"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/square_lha.jpg" alt="Latest news" height="70"></a>
+						</div>
+
+						<div style="margin-top:10px;">
+							<a href="http://lionsolver.com/info/whitepaper/"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/square_dwp.jpg" alt="Download the whitepaper" style="height:70px; margin-right:20px;"></a>
+							<a href="http://lionsolver.com/info/videos/"><img src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/square_lia.jpg" alt="LIONsolver in Action" height="70"></a>
+						</div>
+					<p></p>
+
+				</div>
+				<div class="linkFooter"></div>	    
+				
+				<div style="clear:both"></div>
+			</div>
+
+			<div class="footer">
+				<p id="legal"> <!--a href="https://salesportal.reactive-search.com">Sales portal (reserved access)</a-->
+					Copyright © 2009-2013
+					<a href="http://lionsolver.com/" target="_blank">Lionsolver Inc.</a><br>
+				</p>
+			</div>
+
+			<!-- Google analytics -->
+			<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-11709141-6']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+			</script>
+		
+	</div>
+
+
+<script src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/sitecharm387.js"></script>
+<script>
+SCwidth = 350;
+SCheight = 120;
+SCadditionalHeight = 250;
+SCrequestColor = "#ffc040";
+SCchatColor = "#ffe080";
+SCinvitationPhrase = "Hi, I'm a LIONsolver representative. You seem interested: may we chat a little?";
+SCongoingPhrase = "Chatting with LIONsolver..."
+</script>
+<script src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/387"></script>
+
+</div><img style="display: none;" src="LIONsolver%20%20the%20Learning%20and%20Intelligent%20OptimizatioN%20solver_files/a.jpeg"></body></html>
