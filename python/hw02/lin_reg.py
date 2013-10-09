@@ -27,6 +27,7 @@ def calcW( line, ptsCnt ):
     for i in range( ptsCnt ):
         xx = random.uniform( -1, 1 )
         xy = random.uniform( -1, 1 )
+        print "Point ", xx, xy
         y  = func( xx, xy, line )
         X.append( [1, xx, xy] )
         Y.append( y )
@@ -37,14 +38,50 @@ def calcW( line, ptsCnt ):
         for j in range( 3 ):
             for k in range( ptsCnt ):
                 XTX[i][j] += X[k][i] * X[k][j]
+                
+    print "XTX: "
+    for i in range( 3 ):
+        print XTX[i][0], XTX[i][1], XTX[i][2]
+        
     #Calc XTY
     XTY = []
     for i in range( 3 ):
         XTY.append( 0 )
         for k in range( ptsCnt ):
             XTY[i] += X[k][i] * Y[k]
-    # invert xTx
-    invXTX = []
+    print "XTY: "
+    for i in range( 3 ):
+        print XTY[i]
+            
+    # Invert xTx
+    invXTX = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
+    d = XTX[0][0]*(XTX[1][1]*XTX[2][2]-XTX[1][2]*XTX[2][1])+XTX[0][1]*(XTX[1][2]*XTX[2][0]-XTX[1][0]*XTX[2][2])+XTX[0][2]*(XTX[1][0]*XTX[2][1]-XTX[1][1]*XTX[2][0])
+
+    invXTX[0][0] = (XTX[1][1]*XTX[2][2]-XTX[1][2]*XTX[2][1])/d
+    invXTX[0][1] = (XTX[0][2]*XTX[2][1]-XTX[0][1]*XTX[2][2])/d
+    invXTX[0][2] = (XTX[0][1]*XTX[1][2]-XTX[0][2]*XTX[1][1])/d
+
+    invXTX[1][0] = (XTX[1][2]*XTX[2][0]-XTX[1][0]*XTX[2][2])/d
+    invXTX[1][1] = (XTX[0][0]*XTX[2][2]-XTX[0][2]*XTX[2][0])/d
+    invXTX[1][2] = (XTX[0][2]*XTX[1][0]-XTX[0][0]*XTX[1][2])/d
+
+    invXTX[2][0] = (XTX[1][0]*XTX[2][1]-XTX[1][1]*XTX[2][0])/d
+    invXTX[2][1] = (XTX[0][1]*XTX[2][0]-XTX[0][0]*XTX[2][1])/d
+    invXTX[2][2] = (XTX[0][0]*XTX[1][1]-XTX[0][1]*XTX[1][0])/d
+
+    print "invXTX: "
+    for i in range( 3 ):
+        print invXTX[i][0], invXTX[i][1], invXTX[i][2]
+
+    print "Check inv matrix: "
+    A = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
+    for i in range( 3 ):
+        for j in range( 3 ):
+            for k in range( 3 ):
+                A[i][j] += XTX[i][k] * invXTX[k][j]
+    for i in range( 3 ):
+        print A[i][0], A[i][1], A[i][2]
+    
 
 
     # Multiply W = invXTX * XTY
@@ -53,23 +90,35 @@ def calcW( line, ptsCnt ):
         for j in range( 3 ):
            W[i] += invXTX[i][j] * XTY[j]
 
-    return W
+    print "W: "
+    for i in range( 3 ):
+        print W[i]
 
-def checkW( line, W, ptsCheckCnt ):
-    Ein = 0
+    return ( W, X, Y )
+
+def checkW( line, W, X, Y, ptsCheckCnt ):
+    Ein  = 0
+    inSamplePts = len( Y )
+    for i in range( inSamplePts ):
+        y = W[0] + W[1]*X[i][1] + W[2]*X[i][2]
+        if ( y * Y[i] < 0.0 ):
+            Ein += 1
+    Ein = float(Ein)/float(inSamplePts)
+        
+    Eout = 0
     for i in range( ptsCheckCnt ):
         xx = random.uniform( -1, 1 )
         xy = random.uniform( -1, 1 )
         y  = func( xx, xy, line )
-        h  = W[0] + W[1]*xx + W[2]*yy
+        h  = W[0] + W[1]*xx + W[2]*xy
         if ( h > 0 ):
             h = 1
         else:
             h = -1
         if ( y * h < 0 ):
-            Ein += 1
-    Ein = float(Ein)/float(ptsCnt)
-    return Ein
+            Eout += 1
+    Eout = float(Eout)/float(ptsCheckCnt)
+    return Ein, Eout
 
 
 def experiment( ptsCnt, ptsCheckCnt ):
@@ -78,10 +127,15 @@ def experiment( ptsCnt, ptsCheckCnt ):
     line.append( random.uniform( -1, 1 ) )
     line.append( random.uniform( -1, 1 ) )
     line.append( random.uniform( -1, 1 ) )
-    W = calcW( line, ptsCnt )
-    Ein = checkW( line, W, ptsCheckCnt )
+    W, X, Y = calcW( line, ptsCnt )
+    print W
+    Ein, Eout = checkW( line, W, X, Y, ptsCheckCnt )
+    print "{0:.15f}, {1:.15f}".format( Ein, Eout )
 
 
-
+if ( __name__ == '__main__' ):
+    PTS_CNT = 100
+    PTS_CHECK_CNT = 1000
+    experiment( PTS_CNT, PTS_CHECK_CNT )
 
 
