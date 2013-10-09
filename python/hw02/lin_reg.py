@@ -27,7 +27,7 @@ def calcW( line, ptsCnt ):
     for i in range( ptsCnt ):
         xx = random.uniform( -1, 1 )
         xy = random.uniform( -1, 1 )
-        print "Point ", xx, xy
+        #print "Point ", xx, xy
         y  = func( xx, xy, line )
         X.append( [1, xx, xy] )
         Y.append( y )
@@ -39,9 +39,9 @@ def calcW( line, ptsCnt ):
             for k in range( ptsCnt ):
                 XTX[i][j] += X[k][i] * X[k][j]
                 
-    print "XTX: "
-    for i in range( 3 ):
-        print XTX[i][0], XTX[i][1], XTX[i][2]
+    #print "XTX: "
+    #for i in range( 3 ):
+    #    print XTX[i][0], XTX[i][1], XTX[i][2]
         
     #Calc XTY
     XTY = []
@@ -49,9 +49,10 @@ def calcW( line, ptsCnt ):
         XTY.append( 0 )
         for k in range( ptsCnt ):
             XTY[i] += X[k][i] * Y[k]
-    print "XTY: "
-    for i in range( 3 ):
-        print XTY[i]
+            
+    #print "XTY: "
+    #for i in range( 3 ):
+    #    print XTY[i]
             
     # Invert xTx
     invXTX = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
@@ -69,18 +70,18 @@ def calcW( line, ptsCnt ):
     invXTX[2][1] = (XTX[0][1]*XTX[2][0]-XTX[0][0]*XTX[2][1])/d
     invXTX[2][2] = (XTX[0][0]*XTX[1][1]-XTX[0][1]*XTX[1][0])/d
 
-    print "invXTX: "
-    for i in range( 3 ):
-        print invXTX[i][0], invXTX[i][1], invXTX[i][2]
+    #print "invXTX: "
+    #for i in range( 3 ):
+    #    print invXTX[i][0], invXTX[i][1], invXTX[i][2]
 
-    print "Check inv matrix: "
-    A = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
-    for i in range( 3 ):
-        for j in range( 3 ):
-            for k in range( 3 ):
-                A[i][j] += XTX[i][k] * invXTX[k][j]
-    for i in range( 3 ):
-        print A[i][0], A[i][1], A[i][2]
+    #print "Check inv matrix: "
+    #A = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
+    #for i in range( 3 ):
+    #    for j in range( 3 ):
+    #        for k in range( 3 ):
+    #            A[i][j] += XTX[i][k] * invXTX[k][j]
+    #for i in range( 3 ):
+    #    print A[i][0], A[i][1], A[i][2]
     
 
 
@@ -90,9 +91,9 @@ def calcW( line, ptsCnt ):
         for j in range( 3 ):
            W[i] += invXTX[i][j] * XTY[j]
 
-    print "W: "
-    for i in range( 3 ):
-        print W[i]
+    #print "W: "
+    #for i in range( 3 ):
+    #    print W[i]
 
     return ( W, X, Y )
 
@@ -120,22 +121,53 @@ def checkW( line, W, X, Y, ptsCheckCnt ):
     Eout = float(Eout)/float(ptsCheckCnt)
     return Ein, Eout
 
+def plaImplementation( W, X, Y, maxIters = 1000000 ):
+    N = len( Y )
+    for i in range(maxIters):
+        randBase = randim.randrange( 0, N )
+        matchCnt = 0
+        for j in range( N ):
+            ind = (randBase + j) % N
+            y = W[0] + W[1]*X[ind][1] + W[2]*X[ind][2]
+            if ( y * Y[ind] < 0 ):
+                W[1] += X[ind][1]
+                W[2] += X[ind][2]
+                break
+            else:
+                matchCnt += 1
+        if ( matchCnt >= N ):
+            print "Converged in ", i+1, " iterations"
+            break
 
-def experiment( ptsCnt, ptsCheckCnt ):
-    line = []
-    line.append( random.uniform( -1, 1 ) )
-    line.append( random.uniform( -1, 1 ) )
-    line.append( random.uniform( -1, 1 ) )
-    line.append( random.uniform( -1, 1 ) )
-    W, X, Y = calcW( line, ptsCnt )
-    print W
-    Ein, Eout = checkW( line, W, X, Y, ptsCheckCnt )
+
+def experiment( ptsCnt, ptsCheckCnt, triesCnt = 1000, performPla=0 ):
+    Ein = 0
+    Eout = 0
+    for i in range( triesCnt ):
+        line = []
+        line.append( random.uniform( -1, 1 ) )
+        line.append( random.uniform( -1, 1 ) )
+        line.append( random.uniform( -1, 1 ) )
+        line.append( random.uniform( -1, 1 ) )
+        W, X, Y = calcW( line, ptsCnt )
+        print W
+        ein, eout = checkW( line, W, X, Y, ptsCheckCnt )
+        if ( performPla > 0 ):
+            plaImplementation( W, X, Y )
+        Ein += ein
+        Eout += eout
+    Ein = float(Ein)/float(triesCnt)
+    Eout = float(Eout)/float(triesCnt)
     print "{0:.15f}, {1:.15f}".format( Ein, Eout )
 
 
 if ( __name__ == '__main__' ):
     PTS_CNT = 100
     PTS_CHECK_CNT = 1000
-    experiment( PTS_CNT, PTS_CHECK_CNT )
+    TRIES_CNT = 1000
+    experiment( PTS_CNT, PTS_CHECK_CNT, TRIES_CNT )
+    PTS_CNT = 10
+    PTS_CHECK_CNT = 100
+    #experiment( PTS_CNT, PTS_CHECK_CNT, 1 )
 
 
