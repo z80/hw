@@ -106,7 +106,7 @@ def hoefdingsCheck( coinsCnt, flipsCnt, repeatsCnt, eFrom, eTo, eSteps ):
         print "Coin with minimum heads passed"
     else:
         print "Coin with minimum heads failed"
-    print "v for first, rand and min are: ", v1, vr, vm
+    print "v for first, rand and min are: {0:.15f}, {1:.15f}, {2:.15f}".format( vOne, vRand, vMin )
 
 ##tests = int (parameters[0])
 ##coins = int (parameters[1])
