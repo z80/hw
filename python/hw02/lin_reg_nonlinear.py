@@ -71,27 +71,56 @@ def calcWAdv( X, Y ):
         x2 = X[i]*ex2
         XX.append( [1, x1, x2, x1*x2, x1*x1, x2*x2] )
     XX = numpy.matrix( XX )
-    #......
+    XXT = XX.transpose()
+    XXTXX = XXT * XX
+    invXXTXX = numpy.linalg.matrix_power( XXTXX, -1 )
 
-def experiment( ptsCnt, triesCnt = 1000 ):
+    XXTY = XXT * Y
+
+    W = invXXTXX * XXTY
+    print W
+    return W, XX, Y
+
+def checkEoutAdv( W, outSamplePts ):
+    Eout = 0
+    for i in range( outSamplePts ):
+        x1 = random.uniform( -1, 1 )
+        x2 = random.uniform( -1, 1 )
+        y  = func( x1, x2 )
+        X = numpy.matrix( [ 1, x1, x2, x1*x2, x1*x1, x2*x2 ] )
+        Y = X * W
+        if ( Y * y < 0.0 ):
+            Eout += 1
+    Eout = float(Eout)/float(outSamplePts)
+    print "Eout = {0:.15f}".format( Eout )
+    return Eout
+
+
+def experiment( ptsCnt, triesCnt = 1000, outSamplePts = 1000 ):
     Ein = 0
+    Eout = 0
 
     st = 0
     for i in range( triesCnt ):
         W, X, Y = calcWSimple( ptsCnt )
         Ein += checkEinSimple( W, X, Y )
+        Eout += checkEoutAdv( W, outSamplePts ):
         newSt = i * 100 / triesCnt
         if ( newSt != st ):
             st = newSt
             print "{0}% done".format( st )
     Ein = float(Ein)/float(triesCnt)
-    print "Simple Ein={0:.15f}".format( Ein )
+    Eout = float(Eout)/float(outSamplePts)
+    print "Simple   Ein  = {0:.15f}".format( Ein )
+    print "Advanced Eout = {0:.15f}".format( Eout )
+
 
 
 if ( __name__ == '__main__' ):
     PTS_CNT = 1000
     TRIES_CNT = 1000
-    experiment( PTS_CNT, TRIES_CNT )
+    OUT_SAMPLE_PTS = 1000
+    experiment( PTS_CNT, TRIES_CNT, OUT_SAMPLE_PTS )
 
 
 
