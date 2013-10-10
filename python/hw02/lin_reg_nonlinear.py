@@ -1,5 +1,6 @@
 
 import random
+import numpy
 
 N = 100
 
@@ -30,26 +31,18 @@ def calcW( line, ptsCnt ):
         #print "Point ", xx, xy
         y  = func( xx, xy, line )
         X.append( [1, xx, xy] )
-        Y.append( y )
+        Y.append( [y] )
+    X = numpy.matrix( X )
+    Y = numpy.matrix( Y )
+    XT = X.transpose()
     # Calc XTX
-    XTX = []
-    for i in range( 3 ):
-        XTX.append( [ 0, 0, 0 ] )
-        for j in range( 3 ):
-            for k in range( ptsCnt ):
-                XTX[i][j] += X[k][i] * X[k][j]
-                
-    #print "XTX: "
-    #for i in range( 3 ):
-    #    print XTX[i][0], XTX[i][1], XTX[i][2]
-        
+    XTX = XT * X
+    
     #Calc XTY
-    XTY = []
-    for i in range( 3 ):
-        XTY.append( 0 )
-        for k in range( ptsCnt ):
-            XTY[i] += X[k][i] * Y[k]
-            
+    XTY = XT * Y
+
+    numpy.invert( XTX )
+    
     #print "XTY: "
     #for i in range( 3 ):
     #    print XTY[i]
