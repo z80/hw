@@ -121,28 +121,34 @@ def checkW( line, W, X, Y, ptsCheckCnt ):
     Eout = float(Eout)/float(ptsCheckCnt)
     return Ein, Eout
 
-def plaImplementation( W, X, Y, maxIters = 1000000 ):
+def plaImplementation( W, X, Y, triesCnt = 1000, maxIters = 1000000 ):
     N = len( Y )
+    iters = 0
     for i in range(maxIters):
-        randBase = randim.randrange( 0, N )
+        randBase = random.randrange( 0, N )
         matchCnt = 0
         for j in range( N ):
             ind = (randBase + j) % N
             y = W[0] + W[1]*X[ind][1] + W[2]*X[ind][2]
             if ( y * Y[ind] < 0 ):
-                W[1] += X[ind][1]
-                W[2] += X[ind][2]
+                W[0] += Y[ind]
+                W[1] += X[ind][1] * Y[ind]
+                W[2] += X[ind][2] * Y[ind]
                 break
             else:
                 matchCnt += 1
+        iters += 1
         if ( matchCnt >= N ):
-            print "Converged in ", i+1, " iterations"
+            #print "Converged in ", i+1, " iterations"
             break
+    #print "PLA iterations number = ", iters
+    return iters
 
 
 def experiment( ptsCnt, ptsCheckCnt, triesCnt = 1000, performPla=0 ):
     Ein = 0
     Eout = 0
+    plaIters = 0
     for i in range( triesCnt ):
         line = []
         line.append( random.uniform( -1, 1 ) )
@@ -150,15 +156,17 @@ def experiment( ptsCnt, ptsCheckCnt, triesCnt = 1000, performPla=0 ):
         line.append( random.uniform( -1, 1 ) )
         line.append( random.uniform( -1, 1 ) )
         W, X, Y = calcW( line, ptsCnt )
-        print W
+        #print W
         ein, eout = checkW( line, W, X, Y, ptsCheckCnt )
         if ( performPla > 0 ):
-            plaImplementation( W, X, Y )
+            plaIters += plaImplementation( W, X, Y )
         Ein += ein
         Eout += eout
     Ein = float(Ein)/float(triesCnt)
     Eout = float(Eout)/float(triesCnt)
-    print "{0:.15f}, {1:.15f}".format( Ein, Eout )
+    plaIters = float(plaIters)/float(triesCnt)
+    print "Ein={0:.15f}, Eout={1:.15f}".format( Ein, Eout )
+    print "PLA iterations number = {0:.15f}".format( plaIters )
 
 
 if ( __name__ == '__main__' ):
@@ -166,8 +174,10 @@ if ( __name__ == '__main__' ):
     PTS_CHECK_CNT = 1000
     TRIES_CNT = 1000
     experiment( PTS_CNT, PTS_CHECK_CNT, TRIES_CNT )
+
+    #PLA iterations cnt
     PTS_CNT = 10
     PTS_CHECK_CNT = 100
-    #experiment( PTS_CNT, PTS_CHECK_CNT, 1 )
+    experiment( PTS_CNT, PTS_CHECK_CNT, TRIES_CNT, 1 )
 
 
