@@ -1,42 +1,44 @@
 
-#~ module SpaceShip
+module SpaceShip
 
-    #~ def operator<=>( b )
-        #~ a = self
-        #~ if ( a == b )
-            #~ return 0
-        #~ end
-        #~ if ( a == "r" )
-            #~ if ( b == "s" )
-                #~ return 1
-            #~ end
-            #~ if ( b == "p" )
-                #~ return -1
-            #~ end
-        #~ end
-        #~ if ( a == "s" )
-            #~ if ( b == "p" )
-                #~ return 1
-            #~ end
-            #~ if ( b == "r" )
-                #~ return -1
-            #~ end
-        #~ end
-        #~ if ( a == "p" )
-            #~ if ( b == "s" )
-                #~ return -1
-            #~ end
-            #~ if ( b == "r" )
-                #~ return 1
-            #~ end
-        #~ end
-    #~ end
+    def <=>( b )
+        a = self
+        if ( a == b )
+            return 0
+        end
+        if ( a == "r" )
+            if ( b == "s" )
+                return 1
+            end
+            if ( b == "p" )
+                return -1
+            end
+        end
+        if ( a == "s" )
+            if ( b == "p" )
+                return 1
+            end
+            if ( b == "r" )
+                return -1
+            end
+        end
+        if ( a == "p" )
+            if ( b == "s" )
+                return -1
+            end
+            if ( b == "r" )
+                return 1
+            end
+	end
+	
+	return -1
+    end
 
-#~ end
+end
 
-#~ class String
-    #~ include SpaceShip
-#~ end
+class String
+    include SpaceShip
+end
 
 class RockPaperScissors
 
@@ -58,13 +60,15 @@ class RockPaperScissors
         end
       
         def self.winner_index( s1, s2 )
-            a = [ "R", "P", "S" ]
+            a = [ "r", "p", "s" ]
             i1 = a.index( s1 )
             if ( i1 == nil )
+		puts s1
                 raise NoSuchStrategyError
             end
             i2 = a.index( s2 )
             if ( i2 == nil )
+		puts s2
                 raise NoSuchStrategyError
             end
             if ( s1 >= s2 )
@@ -77,7 +81,7 @@ class RockPaperScissors
 end
 
 
-RockPaperScissors.winner( [ "aaa", "p" ], [ "vvv", "s" ] )
+puts RockPaperScissors.winner( [ "aaa", "p" ], [ "vvv", "s" ] )
 
 
 

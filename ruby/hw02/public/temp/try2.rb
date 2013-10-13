@@ -53,3 +53,13 @@ class JellyBean < Dessert
     end
     
 end
+
+a = JellyBean.new( "shit" )
+puts a.flavor
+puts a.name
+puts a.delicious?
+a.flavor = 'licorice'
+puts a.name
+puts a.flavor
+puts a.delicious?
+puts a.calories
