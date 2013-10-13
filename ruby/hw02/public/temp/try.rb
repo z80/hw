@@ -68,3 +68,18 @@ end
 class String
   include FunWithStrings
 end
+
+class Array
+    include FunWithStrings
+end
+
+res = [ "aa", "aa", "bb", "asda", "Me", "Aa", "Em" ].anagram_groups
+puts res.length
+res.each do |a|
+    puts "output "
+    a.each do |s|
+        puts s
+    end
+end
+
+
