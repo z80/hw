@@ -5,17 +5,19 @@ class Class
     attr_reader attr_name+"_history" # create bar_history getter
     class_eval %Q{
       # YOUR CODE HERE
-      @#{attr_name} = [ nil ]
       
       def #{attr_name}
+        @#{attr_name} ||= [ nil ]
         return @#{attr_name}[ @#{attr_name}.length - 1 ]
       end
       
       def #{attr_name}=( val )
+        @#{attr_name} ||= [ nil ]
         @#{attr_name} << val
       end
       
       def #{attr_reader}
+        @#{attr_name} ||= [ nil ]
         return @#{attr_name}
       end
     }
