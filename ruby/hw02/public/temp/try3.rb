@@ -1,46 +1,4 @@
 
-module SpaceShip
-
-    def <=>( b )
-        a = self
-        # Euqal strategy means first wins by definition.
-        if ( a == b )
-            return 1
-        end
-        if ( a == "r" )
-            if ( b == "s" )
-                return 1
-            end
-            if ( b == "p" )
-                return -1
-            end
-        end
-        if ( a == "s" )
-            if ( b == "p" )
-                return 1
-            end
-            if ( b == "r" )
-                return -1
-            end
-        end
-        if ( a == "p" )
-            if ( b == "s" )
-                return -1
-            end
-            if ( b == "r" )
-                return 1
-            end
-            
-        end
-    
-        return -1
-    end
-
-end
-
-class String
-    include SpaceShip
-end
 
 class RockPaperScissors
 
@@ -51,10 +9,47 @@ class RockPaperScissors
             # YOUR CODE HERE
             s1 = player1[1].downcase
             s2 = player2[1].downcase
-            if ( self.winner_index( s1, s2 ) == 0 )
+
+            # Check input values validity
+            a = [ "r", "p", "s" ]
+            i1 = a.index( s1 )
+            if ( i1 == nil )
+                puts s1
+                raise NoSuchStrategyError
+            end
+            i2 = a.index( s2 )
+            if ( i2 == nil )
+                puts s2
+                raise NoSuchStrategyError
+            end
+
+            if ( s1 == s2 )
                 return player1
             end
-            return player2
+            if ( s1 == "r" )
+                if ( s2 == "s" )
+                    return player1
+                end
+                if ( s2 == "p" )
+                    return player2
+                end
+            end
+            if ( s1 == "s" )
+                if ( s2 == "r" )
+                    return player2
+                end
+                if ( s2 == "p" )
+                    return player1
+                end
+            end
+            if ( s1 == "p" )
+                if ( s2 == "r" )
+                    return player1
+                end
+                if ( s2 == "s" )
+                    return player2
+                end
+            end
         end
 
         def self.tournament_winner( tournament )
@@ -72,30 +67,13 @@ class RockPaperScissors
             s2 = tournament_winner( s2 )
             return winner( s1, s2 )
         end
-      
-        def self.winner_index( s1, s2 )
-            a = [ "r", "p", "s" ]
-            i1 = a.index( s1 )
-            if ( i1 == nil )
-                puts s1
-                raise NoSuchStrategyError
-            end
-            i2 = a.index( s2 )
-            if ( i2 == nil )
-                puts s2
-                raise NoSuchStrategyError
-            end
-            if ( s1 >= s2 )
-                return 0
-            else
-                return 1
-            end
-        end
-
 end
 
+puts RockPaperScissors.winner( [ "first", "p" ], [ "second", "s" ] )
+puts RockPaperScissors.winner( [ "first", "s" ], [ "second", "R" ] )
+puts "tournament: "
+puts RockPaperScissors.tournament_winner( [ [ "aaa", "p" ], [ "vvv", "s" ] ] )
 
-puts RockPaperScissors.winner( [ "aaa", "p" ], [ "vvv", "s" ] )
 
 
 
