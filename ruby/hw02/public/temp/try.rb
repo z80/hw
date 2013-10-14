@@ -27,7 +27,7 @@ module FunWithStrings
         end
         
         strings.each_index do | i |
-            if ( !involved[i] )
+            if ( ( !involved[i] ) && (strings[i].length > 0) )
                 s1 = strings[i]
                 res << [ s1 ]
                 index = res.length - 1
@@ -81,5 +81,15 @@ res.each do |a|
         puts s
     end
 end
-
+puts "--------------"
+res = [].anagram_groups
+puts res.length
+puts "--------------"
+res = "scream cars for four scar creams".anagram_groups
+res.each do |a|
+    puts "output "
+    a.each do |s|
+        puts s
+    end
+end
 

@@ -15,7 +15,7 @@ describe 'palindrome detection' do
   end    
 end
 
-describe 'word count', :pending => true do
+describe 'word count' do
   it 'should return a hash' do
     'now is the time'.count_words.should be_a_kind_of Hash
   end
@@ -40,7 +40,7 @@ describe 'word count', :pending => true do
   end
 end
 
-describe 'anagram grouping', :pending => true do
+describe 'anagram grouping' do
   describe 'sanity checks' do
     it 'should work on the empty string' do
       ''.anagram_groups.should == []
