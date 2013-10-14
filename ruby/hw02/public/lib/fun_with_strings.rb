@@ -12,7 +12,10 @@ module FunWithStrings
     stri = self
     h = Hash.new( 0 )
     stri.split( /\W+/i ).each do |word|
-      h[ word ] += 1
+      stri = word.gsub( /\W/i, "" ).downcase
+      if ( stri.length > 0 )
+          h[ stri ] += 1
+      end
     end
     return h
   end
@@ -20,6 +23,12 @@ module FunWithStrings
     def anagram_groups
         # your code here
         strings = self
+	if ( strings.is_a? String )
+            if ( strings == "" )
+                return []
+            end
+            return [ strings ]
+        end
         res = Array.new()
         involved = Array.new()
         strings.each do |s|
@@ -27,7 +36,7 @@ module FunWithStrings
         end
         
         strings.each_index do | i |
-            if ( !involved[i] )
+            if ( ( !involved[i] ) && (strings[i].length > 0) )
                 s1 = strings[i]
                 res << [ s1 ]
                 index = res.length - 1
@@ -68,3 +77,8 @@ end
 class String
   include FunWithStrings
 end
+
+class Array
+    include FunWithStrings
+end
+
