@@ -19,7 +19,15 @@ module FunWithStrings
   
     def anagram_groups
         # your code here
-        strings = self
+        strings = self.split( /\W+/i )
+        if ( strings.length < 1 )
+            return []
+        end
+        strings.select! { |x| x.length > 0 }
+
+	#puts "Words from string: "
+        #puts strings
+
         res = Array.new()
         involved = Array.new()
         strings.each do |s|
@@ -73,7 +81,7 @@ class Array
     include FunWithStrings
 end
 
-res = [ "aa", "aa", "bb", "asda", "Me", "Aa", "Em" ].anagram_groups
+res = "aa aa bb   asda Me Aa Em   ".anagram_groups
 puts res.length
 res.each do |a|
     puts "output "
@@ -82,7 +90,7 @@ res.each do |a|
     end
 end
 puts "--------------"
-res = [].anagram_groups
+res = "".anagram_groups
 puts res.length
 puts "--------------"
 res = "scream cars for four scar creams".anagram_groups
