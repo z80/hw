@@ -1,7 +1,7 @@
 require 'dessert'
 require 'debugger'
 
-describe Dessert, :pending => true do
+describe Dessert do
   describe 'cake' do
     subject { Dessert.new('cake', 400) }
     its(:calories) { should == 400 }
@@ -27,7 +27,7 @@ describe Dessert, :pending => true do
   end
 end
 
-describe JellyBean, :pending => true do
+describe JellyBean do
   describe 'when non-licorice' do
     subject { JellyBean.new('vanilla') }
     its(:calories) { should == 5 }

@@ -20,15 +20,17 @@ module FunWithStrings
     return h
   end
   
-    def anagram_groups
+def anagram_groups
         # your code here
-        strings = self
-	if ( strings.is_a? String )
-            if ( strings == "" )
-                return []
-            end
-            return [ strings ]
+        strings = self.split( /\W+/i )
+        if ( strings.length < 1 )
+            return []
         end
+        strings.select! { |x| x.length > 0 }
+
+	#puts "Words from string: "
+        #puts strings
+
         res = Array.new()
         involved = Array.new()
         strings.each do |s|

@@ -14,13 +14,13 @@ class RockPaperScissors
             a = [ "r", "p", "s" ]
             i1 = a.index( s1 )
             if ( i1 == nil )
-                puts s1
-                raise NoSuchStrategyError
+                #puts s1
+                raise NoSuchStrategyError.new( "Strategy must be one of R,P,S" )
             end
             i2 = a.index( s2 )
             if ( i2 == nil )
-                puts s2
-                raise NoSuchStrategyError
+                #puts s2
+                raise NoSuchStrategyError.new( "Strategy must be one of R,P,S" )
             end
 
             if ( s1 == s2 )

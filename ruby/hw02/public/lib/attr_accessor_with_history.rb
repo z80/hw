@@ -22,7 +22,10 @@ class Class
       
       def #{attr_name}_history
         @#{attr_name} ||= [ nil ]
-        return @#{attr_name}
+	if ( @#{attr_name}.length < 2 )
+            return nil
+        end
+        return @#{attr_name}[ 0..(@#{attr_name}.length-2) ]
       end
     }
     #puts stri
