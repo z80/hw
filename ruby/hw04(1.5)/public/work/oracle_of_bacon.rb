@@ -29,10 +29,14 @@ class OracleOfBacon
   def initialize(api_key='')
     # your code here
     @api_key = api_key
+    @to      = 'Kevin Bacon'
   end
 
   def find_connections
-    make_uri_from_arguments
+    if ( !make_uri_from_arguments )
+        @response = nil
+	return false
+    end
     puts "Generated URI is: \"#{uri}\""
     begin
       xml = URI.parse(uri).read
@@ -54,9 +58,13 @@ class OracleOfBacon
     # your code here: set the @uri attribute to properly-escaped URI
     #   constructed from the @from, @to, @api_key arguments
     # http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Kevin+Bacon&b=Laurence+Olivier
+    if ( !from_does_equal_to )
+        return false
+    end
     @to ||= "Kevin Bacon"
     @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{@api_key}&a=#{@from}&b=#{@to}}
     @uri = @uri.gsub( ' ', '+' )
+    return true
   end
       
   class Response
