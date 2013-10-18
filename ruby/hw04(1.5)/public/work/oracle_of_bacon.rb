@@ -47,7 +47,7 @@ class OracleOfBacon
     end
     # your code here: create the OracleOfBacon::Response object
     # extract data from 'xml' variable
-    result = Response.new( xml )
+    @response = Response.new( xml )
   end
 
   def make_uri_from_arguments
