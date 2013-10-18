@@ -1,6 +1,6 @@
 
 
-require_relative './oracle_of_bacon.rb'
+require_relative '../lib/oracle_of_bacon.rb'
 require 'nokogiri'
 
 a = '38b' + '99c' + 'e9' + 'ec87'
