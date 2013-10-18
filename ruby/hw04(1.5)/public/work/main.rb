@@ -74,8 +74,11 @@ puts oob.response.type      # => :error
 puts "response.data: "
 puts oob.response.data      # => 'Unauthorized access'
 
-
-
-
+puts "-----------------------------"
+oob = OracleOfBacon.new( a )
+oob.from = 'Laurence Olivier'
+puts oob.find_connections
+puts oob.response.type
+puts oob.response.data
 
 

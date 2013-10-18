@@ -29,13 +29,25 @@ class OracleOfBacon
   def initialize(api_key='')
     # your code here
     @api_key = api_key
+    @from    = 'Kevin Bacon'
+    @to      = 'Kevin Bacon'
+    @type = :error
+    @data = 'Unauthorized access'
   end
 
   def find_connections
-    make_uri_from_arguments
+    puts "HERE 1"
+    if ( !make_uri_from_arguments )
+        puts "HERE 2"
+        @response = Response.new( "<error></error>" )
+	return false
+    end
     puts "Generated URI is: \"#{uri}\""
     begin
       xml = URI.parse(uri).read
+      puts "++++++++++++++++++"
+      puts xml
+      puts "++++++++++++++++++"
     # Timeout::Error, 
     rescue Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
@@ -43,6 +55,7 @@ class OracleOfBacon
       # convert all of these into a generic OracleOfBacon::NetworkError,
       #  but keep the original error message
       # your code here
+      @response = Response.new( "<error></error>" )
       raise NetworkError e
     end
     # your code here: create the OracleOfBacon::Response object
@@ -54,9 +67,13 @@ class OracleOfBacon
     # your code here: set the @uri attribute to properly-escaped URI
     #   constructed from the @from, @to, @api_key arguments
     # http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Kevin+Bacon&b=Laurence+Olivier
+    if ( !from_does_not_equal_to )
+        return false
+    end
     @to ||= "Kevin Bacon"
     @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{@api_key}&a=#{@from}&b=#{@to}}
     @uri = @uri.gsub( ' ', '+' )
+    return true
   end
       
   class Response
@@ -70,7 +87,7 @@ class OracleOfBacon
     private
 
     def parse_response
-      if ! @doc.xpath('/error').empty?
+      if ! @doc.xpath('//error').empty?
         parse_error_response
       # your code here: 'elsif' clauses to handle other responses
       # for responses not matching the 3 basic types, the Response
