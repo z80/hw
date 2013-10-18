@@ -77,20 +77,21 @@ class OracleOfBacon
         actors = @doc.xpath('//actor')
         movies = @doc.xpath('//movie')
         spellcheck = @doc.xpath('//spellcheck')
-      if !actors.empty? && !movies.empty?
-        @type = :graph
-        @data = []
-        @data << actors[0].text
-        movies.each do |m|
-          @data << m.text
-        end
-        @data << actors[1].text
-      elsif !spellcheck.empty?
-        @type = :spellcheck
-        arr = @doc.xpath( '//match' )
-        @data = []
-        arr.each do |a|
-          @data << a.text
+        if !actors.empty? && !movies.empty?
+          @type = :graph
+          @data = []
+          @data << actors[0].text
+          movies.each do |m|
+            @data << m.text
+          end
+          @data << actors[1].text
+        elsif !spellcheck.empty?
+          @type = :spellcheck
+          arr = @doc.xpath( '//match' )
+          @data = []
+          arr.each do |a|
+            @data << a.text
+          end
         end
       end
     end
