@@ -80,20 +80,26 @@ class OracleOfBacon
       if !actors.empty? && !movies.empty?
         @type = :graph
         @data = []
-        @data << actors[0]
+        @data << actors[0].text
         movies.each do |m|
-          @data << m
+          @data << m.text
         end
-        @data << actors[1]
+        @data << actors[1].text
       elsif !spellcheck.empty?
         @type = :spellcheck
-        @data = @doc.xpath( '//match' )
+        arr = @doc.xpath( '//match' )
+        @data = []
+        arr.each do |a|
+          @data << a.text
+        end
       end
     end
+    
     def parse_error_response
       @type = :error
       @data = 'Unauthorized access'
     end
+    
   end
 end
 
