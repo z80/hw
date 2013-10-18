@@ -33,7 +33,7 @@ class OracleOfBacon
 
   def find_connections
     make_uri_from_arguments
-    puts "Generated URI is#{uri}"
+    puts "Generated URI is: \"#{uri}\""
     begin
       xml = URI.parse(uri).read
     # Timeout::Error, 
