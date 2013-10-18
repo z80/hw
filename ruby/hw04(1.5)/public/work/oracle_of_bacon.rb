@@ -36,7 +36,8 @@ class OracleOfBacon
     puts "Generated URI is#{uri}"
     begin
       xml = URI.parse(uri).read
-    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+    # Timeout::Error, 
+    rescue Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
       Net::ProtocolError => e
       # convert all of these into a generic OracleOfBacon::NetworkError,
@@ -55,6 +56,7 @@ class OracleOfBacon
     # http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Kevin+Bacon&b=Laurence+Olivier
     @to ||= "Kevin Bacon"
     @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{@api_key}&a=#{@from}&b=#{@to}}
+    @uri = @uri.gsub( ' ', '+' )
   end
       
   class Response
