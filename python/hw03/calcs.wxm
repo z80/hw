@@ -1,0 +1,37 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.04.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq: P = 2 * M * exp( -2*%epsilon ^ 2 * N );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+res = solve( [eq], [N] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%epsilon: 0.05;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P: 0.03;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+M: 100;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+N: log(sqrt(2)*sqrt(M/%epsilon))/%epsilon^2;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
