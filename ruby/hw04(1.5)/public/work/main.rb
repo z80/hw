@@ -3,8 +3,9 @@
 require_relative './oracle_of_bacon.rb'
 require 'nokogiri'
 
+a = '38b' + '99c' + 'e9' + 'ec87'
 
-oob = OracleOfBacon.new('38b99ce9ec87')
+oob = OracleOfBacon.new( a )
 
 # connect Laurence Olivier to Kevin Bacon
 oob.from = 'Laurence Olivier'
