@@ -29,13 +29,11 @@ class OracleOfBacon
   def initialize(api_key='')
     # your code here
     @api_key = api_key
-    @from    = 'Kevin Bacon'
-    @to      = 'Kevin Bacon'
-    @type = :error
-    @data = 'Unauthorized access'
   end
 
   def find_connections
+    @from    ||= 'Kevin Bacon'
+    @to      ||= 'Kevin Bacon'
     puts "HERE 1"
     if ( !make_uri_from_arguments )
         puts "HERE 2"
@@ -70,7 +68,6 @@ class OracleOfBacon
     if ( !from_does_not_equal_to )
         return false
     end
-    @to ||= "Kevin Bacon"
     @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{@api_key}&a=#{@from}&b=#{@to}}
     @uri = @uri.gsub( ' ', '+' )
     return true
@@ -87,6 +84,9 @@ class OracleOfBacon
     private
 
     def parse_response
+      @type = :error
+      @data = 'Unauthorized access'
+
       if ! @doc.xpath('//error').empty?
         parse_error_response
       # your code here: 'elsif' clauses to handle other responses
