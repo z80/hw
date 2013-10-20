@@ -42,8 +42,14 @@ r = OracleOfBacon::Response.new(File.read '../spec/unknown.xml')
 puts r.type
 puts r.data
 
-
-
+puts ""
+puts ""
+puts "Testing response URI: "
+oob = OracleOfBacon.new('fake_key')
+oob.from = '3%2 "a'
+oob.to = 'George Clooney'
+oob.make_uri_from_arguments
+puts oob.uri
 
 #puts "response.type: "
 #puts oob.response.type      # => :graph
