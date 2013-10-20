@@ -19,6 +19,32 @@ oob.to = oob.from = 'Ian McKellen'
 puts oob.valid?
 puts oob.from_does_not_equal_to
 
+
+puts ""
+puts ""
+puts "Testing response: "
+r = OracleOfBacon::Response.new(File.read '../spec/graph_example.xml')
+puts r.type
+puts r.data
+
+puts ""
+puts ""
+puts "Testing response 2: "
+r = OracleOfBacon::Response.new(File.read '../spec/graph_example2.xml')
+puts r.type
+puts r.data
+
+
+puts ""
+puts ""
+puts "Testing response unknown: "
+r = OracleOfBacon::Response.new(File.read '../spec/unknown.xml')
+puts r.type
+puts r.data
+
+
+
+
 #puts "response.type: "
 #puts oob.response.type      # => :graph
 

@@ -105,6 +105,9 @@ class OracleOfBacon
     attr_reader :type, :data
     # create a Response object from a string of XML markup.
     def initialize(xml)
+      #puts "________________________________________"
+      #puts xml
+      #puts "________________________________________"
       @doc = Nokogiri::XML(xml)
       parse_response
     end
@@ -127,11 +130,16 @@ class OracleOfBacon
         if !actors.empty? && !movies.empty?
           @type = :graph
           @data = []
-          @data << actors[0].text
           movies.each do |m|
             @data << m.text
           end
-          @data << actors[1].text
+          aa = []
+	  actors.each do |a|
+	     aa << a.text
+	  end
+	  aa = aa.zip( @data )
+	  @data = aa.flatten()
+	  @data = @data.delete_if { |a| a == nil }
         elsif !spellcheck.empty?
           @type = :spellcheck
           arr = @doc.xpath( '//match' )
@@ -139,6 +147,12 @@ class OracleOfBacon
           arr.each do |a|
             @data << a.text
           end
+	else
+	  @type = :unknown
+	  @data = "unknown" #@doc.xpath( "/other" ).attribute( "name" )
+	  #puts "_______________________"
+	  #puts @data
+	  #puts "_______________________"
         end
       end
     end
