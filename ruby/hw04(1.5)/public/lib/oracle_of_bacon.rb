@@ -63,26 +63,28 @@ class OracleOfBacon
 
   def find_connections
     puts "HERE 1"
-    if ( !make_uri_from_arguments )
-        puts "HERE 2"
-        @response = Response.new( "<error></error>" )
-	return false
-    end
-    #puts "Generated URI is: \"#{uri}\""
+    #if ( !make_uri_from_arguments )
+    #    puts "HERE 2"
+    #    #@response = Response.new( "<error></error>" )
+    #     return false
+    #end
+    make_uri_from_arguments
+    puts "Generated URI is: \"#{@uri}\""
     begin
-      xml = URI.parse(uri).read
-      #puts "++++++++++++++++++"
-      #puts xml
-      #puts "++++++++++++++++++"
+      xml = URI.parse( @uri ).read
+      puts "++++++++++++++++++"
+      puts xml
+      puts "++++++++++++++++++"
     # Timeout::Error, 
     rescue Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
-      Net::ProtocolError => e
+      Net::ProtocolError, Timeout::Error => e
+
       # convert all of these into a generic OracleOfBacon::NetworkError,
       #  but keep the original error message
       # your code here
-      @response = Response.new( "<error></error>" )
-      raise NetworkError e
+      #@response = Response.new( "<error></error>" )
+      raise NetworkError, e
     end
     # your code here: create the OracleOfBacon::Response object
     # extract data from 'xml' variable
@@ -93,13 +95,13 @@ class OracleOfBacon
     # your code here: set the @uri attribute to properly-escaped URI
     #   constructed from the @from, @to, @api_key arguments
     # http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Kevin+Bacon&b=Laurence+Olivier
+    p = CGI.escape( @api_key )
+    a = CGI.escape( @from.to_s )
+    b = CGI.escape( @to.to_s )
+    @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{p}&a=#{a}&b=#{b}}
     if ( !from_does_not_equal_to )
         return false
     end
-    p = CGI.escape( @api_key )
-    a = CGI.escape( @from )
-    b = CGI.escape( @to )
-    @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{p}&a=#{a}&b=#{b}}
     return true
   end
       
@@ -152,9 +154,6 @@ class OracleOfBacon
 	else
 	  @type = :unknown
 	  @data = "unknown" #@doc.xpath( "/other" ).attribute( "name" )
-	  #puts "_______________________"
-	  #puts @data
-	  #puts "_______________________"
         end
       end
     end
