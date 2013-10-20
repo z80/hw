@@ -69,12 +69,12 @@ class OracleOfBacon
     #     return false
     #end
     make_uri_from_arguments
-    puts "Generated URI is: \"#{@uri}\""
+    #puts "Generated URI is: \"#{@uri}\""
     begin
       xml = URI.parse( @uri ).read
-      puts "++++++++++++++++++"
-      puts xml
-      puts "++++++++++++++++++"
+      #puts "++++++++++++++++++"
+      #puts xml
+      #puts "++++++++++++++++++"
     # Timeout::Error, 
     rescue Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
