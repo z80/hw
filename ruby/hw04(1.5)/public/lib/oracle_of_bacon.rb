@@ -68,12 +68,12 @@ class OracleOfBacon
         @response = Response.new( "<error></error>" )
 	return false
     end
-    puts "Generated URI is: \"#{uri}\""
+    #puts "Generated URI is: \"#{uri}\""
     begin
       xml = URI.parse(uri).read
-      puts "++++++++++++++++++"
-      puts xml
-      puts "++++++++++++++++++"
+      #puts "++++++++++++++++++"
+      #puts xml
+      #puts "++++++++++++++++++"
     # Timeout::Error, 
     rescue Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
@@ -96,8 +96,10 @@ class OracleOfBacon
     if ( !from_does_not_equal_to )
         return false
     end
-    @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{@api_key}&a=#{@from}&b=#{@to}}
-    @uri = @uri.gsub( ' ', '+' )
+    p = CGI.escape( @api_key )
+    a = CGI.escape( @from )
+    b = CGI.escape( @to )
+    @uri = %Q{http://oracleofbacon.org/cgi-bin/xml?p=#{p}&a=#{a}&b=#{b}}
     return true
   end
       
