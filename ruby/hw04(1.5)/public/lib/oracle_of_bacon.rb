@@ -12,14 +12,44 @@ class OracleOfBacon
   class NetworkError < RuntimeError ; end
   class InvalidKeyError < RuntimeError ; end
 
-  attr_accessor :from, :to
+  #attr_accessor :from, :to
+  def from
+      return @from
+  end
+  def from=( arg )
+    @from = arg
+    @to ||= 'Kevin Bacon'
+  end
+  def to
+    return @to
+  end
+  def to=( arg )
+    @to = arg
+    @from ||= 'Kevin Bacon'
+  end
+
   attr_reader :api_key, :response, :uri
   
   include ActiveModel::Validations
-  validates_presence_of :from
-  validates_presence_of :to
-  validates_presence_of :api_key
-  validate :from_does_not_equal_to
+  #validates_presence_of :from
+  #validates_presence_of :to
+  #validates_presence_of :api_key
+  #validate :from_does_not_equal_to
+  def valid?
+    if ( !@from )
+        return false
+    end
+    if ( !@to )
+      return false
+    end
+    if ( !@api_key )
+      return false
+    end
+    if ( !from_does_not_equal_to )
+      return false
+    end
+    return true
+  end
 
   def from_does_not_equal_to
     # YOUR CODE HERE
@@ -32,8 +62,6 @@ class OracleOfBacon
   end
 
   def find_connections
-    @from    ||= 'Kevin Bacon'
-    @to      ||= 'Kevin Bacon'
     puts "HERE 1"
     if ( !make_uri_from_arguments )
         puts "HERE 2"

@@ -15,70 +15,70 @@ end
 oob = OracleOfBacon.new( a )
 
 # connect Laurence Olivier to Kevin Bacon
-oob.from = 'Laurence Olivier'
-puts "find_connections output: "
-puts oob.find_connections
+oob.to = oob.from = 'Ian McKellen'
+puts oob.valid?
+puts oob.from_does_not_equal_to
 
-puts "response.type: "
-puts oob.response.type      # => :graph
+#puts "response.type: "
+#puts oob.response.type      # => :graph
 
-puts "response.data: "
-puts oob.response.data      # => ['Kevin Bacon', 'The Big Picture (1989)', 'Eddie Albert (I)', 'Carrie (1952)', 'Laurence Olivier']
+#puts "response.data: "
+#puts oob.response.data      # => ['Kevin Bacon', 'The Big Picture (1989)', 'Eddie Albert (I)', 'Carrie (1952)', 'Laurence Olivier']
 
 
 puts ""
 puts ""
 puts ""
-puts "Secoond test: "
+#puts "Secoond test: "
 
 # #connect Carrie Fisher to Ian McKellen
-oob.from = 'Carrie Fisher'
-oob.to = 'Ian McKellen'
-puts "find_connections output: "
-puts oob.find_connections
+#oob.from = 'Carrie Fisher'
+#oob.to = 'Ian McKellen'
+#puts "find_connections output: "
+#puts oob.find_connections
 
-puts "response.data: "
-puts oob.response.data      # => ['Ian McKellen', 'Doogal (2006)', ...etc]
+#puts "response.data: "
+#puts oob.response.data      # => ['Ian McKellen', 'Doogal (2006)', ...etc]
 
 
 
 puts ""
 puts ""
 puts ""
-puts "Third test: "
+#puts "Third test: "
 
 # #with multiple matches
-oob.to = 'Anthony Perkins'
-puts "find_connections output"
-oob.find_connections
+#oob.to = 'Anthony Perkins'
+#puts "find_connections output"
+#oob.find_connections
 
-puts "response.type: "
-puts oob.response.type      # => :spellcheck
+#puts "response.type: "
+#puts oob.response.type      # => :spellcheck
 
-puts "response.data: "
-puts oob.response.data      # => ['Anthony Perkins (I)', ...33 more variations of the name]
+#puts "response.data: "
+#puts oob.response.data      # => ['Anthony Perkins (I)', ...33 more variations of the name]
 
 
 
 puts ""
 puts ""
 puts ""
-puts "Fourth test: "
+#puts "Fourth test: "
 
 #with bad key
-oob = OracleOfBacon.new('known_bad_key')
-puts "find_connections output: "
-oob.find_connections
-puts "response.type: "
-puts oob.response.type      # => :error
-puts "response.data: "
-puts oob.response.data      # => 'Unauthorized access'
+#oob = OracleOfBacon.new('known_bad_key')
+#puts "find_connections output: "
+#oob.find_connections
+#puts "response.type: "
+#puts oob.response.type      # => :error
+#puts "response.data: "
+#puts oob.response.data      # => 'Unauthorized access'
 
-puts "-----------------------------"
-oob = OracleOfBacon.new( a )
-oob.from = 'Laurence Olivier'
-puts oob.find_connections
-puts oob.response.type
-puts oob.response.data
+#puts "-----------------------------"
+#oob = OracleOfBacon.new( a )
+#oob.from = 'Laurence Olivier'
+#puts oob.find_connections
+#puts oob.response.type
+#puts oob.response.data
 
 
