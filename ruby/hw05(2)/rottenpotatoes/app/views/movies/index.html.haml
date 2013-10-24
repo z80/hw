@@ -4,7 +4,7 @@
 %table#movies
   %thead
     %tr
-      %th Movie Title
+      %th= link_to 'Title', movies_path( {:order=>"name"}), :class=>"hilite"
       %th Rating
       %th Release Date
       %th More Info
