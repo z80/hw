@@ -18,7 +18,7 @@ P: 0.05;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-N: 440000;
+N: 460000;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -145,12 +145,8 @@ numer: true;
 Bias: 1/2*integrate( (sin(%pi*x) - 0.95492965855137*x)^2, x, -1, 1 );
 /* [wxMaxima: input   end   ] */
 
-/* [wxMaxima: input   start ] */
-sqrt(%);
-/* [wxMaxima: input   end   ] */
-
 /* [wxMaxima: comment start ]
-Answer is C.v E.i. Bis is close to 0.5.
+Answer is B. E.i. Bias is close to 0.3.
    [wxMaxima: comment end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
