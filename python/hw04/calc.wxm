@@ -1,0 +1,157 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.04.0 ] */
+
+/* [wxMaxima: title   start ]
+Task 1.
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dVC: 10;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P: 0.05;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+N: 440000;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%epsilon: 0.05;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq: p: 4 * (2*N) ^ dVC * exp( -1/8 * %epsilon^2*N );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+So it is 460000. Andwer d. for 2*N
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: title   start ]
+Task 2.
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dVC: 50;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%delta: 0.05;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsA: sqrt( 8/N* log( 4 * (2*N)^dVC / %delta ) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsB: sqrt( 2/N * log( 2 * N * N^dVC ) ) + sqrt( 1/N * log( 1/%delta ) ) + 1/N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsC: %epsilon^2 = 1/N * ( 2*%epsilon + log( 6*(2*N)^dVC/%delta ) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve( [epsC], [%epsilon] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsC: ((N*log(135107988821114880*N^50)+1)^0.5+1)/N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsD: %epsilon^2 = 1/(2*N) * ( 4*%epsilon*(1 + %epsilon) + log( 4*(N^2)^dVC/%delta ) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve( [epsD], [%epsilon] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsD: (22619537*((N-2)*log(80*N^100)+2)^0.5+31988856)/(31988856*N-63977712);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([epsA, epsB, epsC, epsD], [N,9000,10000]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+B is smaller then A
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+The smallest one is C. But D isn't plotted. It might be it is the smallest one. So the answer is D.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: title   start ]
+Task 3.
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([epsC, epsD], [N,99,10000]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Anyway it's D the smallest.;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: title   start ]
+Task 4.
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(sin(%pi*x)*x, x, -1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%alpha = 3/2 * 0.63661977236758;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([sin(%pi*x), 0.95492965855137*x], [x,-1,1])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The closest answer is C.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: title   start ]
+Task 5.
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Bias: 1/2*integrate( (sin(%pi*x) - 0.95492965855137*x)^2, x, -1, 1 );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqrt(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Answer is C.v E.i. Bis is close to 0.5.
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
