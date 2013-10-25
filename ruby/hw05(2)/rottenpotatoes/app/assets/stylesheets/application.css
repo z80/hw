@@ -1,3 +1,8 @@
+
+table#movies th.hilite {
+  background-color: yellow;
+} 
+
 html, body {
   margin: 0;
   padding: 0;
@@ -61,7 +66,4 @@ form label {
 }
 
 
-table#movies th.hilite {
-  background-color: yellow;
-} 
 

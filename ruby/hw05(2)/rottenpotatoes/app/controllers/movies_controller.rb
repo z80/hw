@@ -1,13 +1,28 @@
+
+#~ require 'debug'
+
+
 class MoviesController < ApplicationController
 
   def show
-    id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
 
   def index
-    @movies = Movie.all
+    puts "_____________________"
+    puts params
+    sort = params[ "order" ] # retrieve movie ID from URI route
+    puts sort
+    puts "_____________________"
+    if ( sort == "name" )
+      @movies = Movie.order( "title ASC" ).all
+    elsif ( sort == "date" )
+      @movies = Movie.order( "release_date ASC" ).all
+    else
+      #debug
+      @movies = Movie.all
+    end
   end
 
   def new
