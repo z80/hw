@@ -10,19 +10,38 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #~ a = Movie.select( "rating" ).distinct.all
+    a = Movie.find( :all, :select=>"DISTINCT movies.rating", :order=>"movies.rating" )
+    @all_ratings = []
+    a.each do |r|
+      @all_ratings << r.rating
+    end
     puts "_____________________"
     puts params
+    puts a
+    puts @all_ratings
     sort = params[ "order" ] # retrieve movie ID from URI route
     puts sort
     puts "_____________________"
+    
+    ratings = params["ratings"]
+    if !ratings
+      ratings = @all_ratings
+    else
+      ratings = ratings.keys
+    end
     if ( sort == "name" )
-      @movies = Movie.order( "title ASC" ).all
+      @movies = Movie.order( "title ASC" )
     elsif ( sort == "date" )
-      @movies = Movie.order( "release_date ASC" ).all
+      @movies = Movie.order( "release_date ASC" )
     else
       #debug
-      @movies = Movie.all
+      @movies = Movie
     end
+    @movies = @movies.find_all_by_rating( ratings )
+    
+    @last_sort = sort
+    @last_ratings = ratings
   end
 
   def new
