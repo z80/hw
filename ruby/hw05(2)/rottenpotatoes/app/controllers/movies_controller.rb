@@ -10,43 +10,47 @@ class MoviesController < ApplicationController
   end
 
   def index
-    #~ a = Movie.select( "rating" ).distinct.all
     a = Movie.find( :all, :select=>"DISTINCT movies.rating", :order=>"movies.rating" )
     @all_ratings = []
     a.each do |r|
       @all_ratings << r.rating
     end
-    
-    ratings = params["ratings"]
-    if !ratings
-      ratings = @all_ratings
-    else
-      ratings = ratings.keys
-    end
-    
-    sort = params[ "order" ] # retrieve movie ID from URI route
-    if ( sort == "name" )
+
+    ratings = params["ratings"] ? params["ratings"] :
+                                ( flash[:ratings] ? flash[:ratings] : @all_ratings )
+    flash[:ratings] = ratings
+    ratings = ratings.keys
+
+    order = params[ "order" ] ? params[ "order" ] :
+                              ( flash[:order] ? flash[:order] : nil ) # retrieve movie ID from URI route
+    flash[:order] = order
+
+    if ( order == "name" )
       @movies = Movie.order( "title ASC" )
-    elsif ( sort == "date" )
+    elsif ( order == "date" )
       @movies = Movie.order( "release_date ASC" )
     else
       #debug
       @movies = Movie
     end
     @movies = @movies.find_all_by_rating( ratings )
-    
+
     #default settings:
-    @def_sort = sort
-    @def_ratings = {}
+    #@def_sort = sort
     ratings = params["ratings"]
-    @def_ratings = ratings ? ratings : {}
-    
+    puts "def_ratings before assigning: "
+    puts @def_ratings
+    @def_ratings = ratings ? ratings : flash[:ratings]
+
+
     puts "_____________________"
+    puts "\"All params structure: \""
     puts params
     puts a
+    puts "\"All ratings: \""
     puts @all_ratings
-    puts sort
     puts '########'
+    puts "\"Selected ratings: \""
     puts @def_ratings
     puts "_____________________"
 
