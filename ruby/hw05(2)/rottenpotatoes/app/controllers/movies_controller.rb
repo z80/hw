@@ -24,6 +24,7 @@ class MoviesController < ApplicationController
     order = params[ "order" ] ? params[ "order" ] :
                               ( flash[:order] ? flash[:order] : nil ) # retrieve movie ID from URI route
     flash[:order] = order
+    @order = order
 
     if ( order == "name" )
       @movies = Movie.order( "title ASC" )
