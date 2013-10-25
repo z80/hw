@@ -12,18 +12,20 @@ class MoviesController < ApplicationController
   def index
     a = Movie.find( :all, :select=>"DISTINCT movies.rating", :order=>"movies.rating" )
     @all_ratings = []
+    def_ratings_selection = {}
     a.each do |r|
       @all_ratings << r.rating
+      def_ratings_selection[ r.rating ] = true
     end
 
     ratings = params["ratings"] ? params["ratings"] :
-                                ( flash[:ratings] ? flash[:ratings] : @all_ratings )
-    flash[:ratings] = ratings
+                                ( session[:ratings] ? session[:ratings] : def_ratings_selection )
+    session[:ratings] = ratings
     ratings = ratings.keys
 
     order = params[ "order" ] ? params[ "order" ] :
-                              ( flash[:order] ? flash[:order] : nil ) # retrieve movie ID from URI route
-    flash[:order] = order
+                              ( session[:order] ? session[:order] : nil ) # retrieve movie ID from URI route
+    session[:order] = order
     @order = order
 
     if ( order == "name" )
@@ -36,25 +38,8 @@ class MoviesController < ApplicationController
     end
     @movies = @movies.find_all_by_rating( ratings )
 
-    #default settings:
-    #@def_sort = sort
     ratings = params["ratings"]
-    puts "def_ratings before assigning: "
-    puts @def_ratings
-    @def_ratings = ratings ? ratings : flash[:ratings]
-
-
-    puts "_____________________"
-    puts "\"All params structure: \""
-    puts params
-    puts a
-    puts "\"All ratings: \""
-    puts @all_ratings
-    puts '########'
-    puts "\"Selected ratings: \""
-    puts @def_ratings
-    puts "_____________________"
-
+    @def_ratings = ratings ? ratings : session[:ratings]
   end
 
   def new
