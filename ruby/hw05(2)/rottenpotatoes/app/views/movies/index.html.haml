@@ -10,7 +10,7 @@
   = submit_tag 'Refresh' , :id=>"ratings_submit"
 
 %table#movies
-  %p order = #{@order.to_s}
+  -#%p order = #{@order.to_s}
   %thead
     %tr
       %th{:class=>(@order == "name" ? "hilite" : "" )}= link_to 'Title', movies_path( {:order=>"name"} ), :id=>"title_header"
