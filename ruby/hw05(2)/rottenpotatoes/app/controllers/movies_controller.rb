@@ -16,13 +16,6 @@ class MoviesController < ApplicationController
     a.each do |r|
       @all_ratings << r.rating
     end
-    puts "_____________________"
-    puts params
-    puts a
-    puts @all_ratings
-    sort = params[ "order" ] # retrieve movie ID from URI route
-    puts sort
-    puts "_____________________"
     
     ratings = params["ratings"]
     if !ratings
@@ -30,6 +23,8 @@ class MoviesController < ApplicationController
     else
       ratings = ratings.keys
     end
+    
+    sort = params[ "order" ] # retrieve movie ID from URI route
     if ( sort == "name" )
       @movies = Movie.order( "title ASC" )
     elsif ( sort == "date" )
@@ -40,8 +35,21 @@ class MoviesController < ApplicationController
     end
     @movies = @movies.find_all_by_rating( ratings )
     
-    @last_sort = sort
-    @last_ratings = ratings
+    #default settings:
+    @def_sort = sort
+    @def_ratings = {}
+    ratings = params["ratings"]
+    @def_ratings = ratings ? ratings : {}
+    
+    puts "_____________________"
+    puts params
+    puts a
+    puts @all_ratings
+    puts sort
+    puts '########'
+    puts @def_ratings
+    puts "_____________________"
+
   end
 
   def new
