@@ -23,10 +23,15 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
+  Given the following ratings 'PG' and 'R' are checked
   # enter step(s) to uncheck all other checkboxes
+  And all other ratings are not checked
   # enter step to "submit" the search form on the homepage
+  When I click "submit" search from on the homepage
   # enter step(s) to ensure that PG and R movies are visible
+  Then movies with ratings 'PG' and 'R' are visible
   # enter step(s) to ensure that other movies are not visible
+  And movies with other ratings are not visible
 
 Scenario: all ratings selected
   # see assignment
