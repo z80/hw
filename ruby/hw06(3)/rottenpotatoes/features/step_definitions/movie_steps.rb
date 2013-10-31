@@ -1,3 +1,6 @@
+
+#require 'debug'
+
 # Add a declarative step here for populating the DB with movies.
 
 m = Movie.new()
@@ -90,8 +93,81 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+  visit( '/movies' )
+  #puts rating_list
+  #puts Capybara.page.body
+  ratings = rating_list.split(%r{,\s*})
+  if uncheck
+    ratings.each do |r|
+      step "I uncheck \"ratings_#{r}\""
+    end
+  else
+    ratings.each do |r|
+      puts r
+      step "I check \"ratings_#{r}\""
+    end
+  end  
 end
 
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
+  a = Movie.all
+  cnt = 0
+  a.each do
+     cnt += 1
+  end
+  rows = page.body.downcase.scan( "<tr>" ).size - 1
+  puts cnt
+  puts rows
+  cnt.should == rows
 end
+
+
+
+
+
+
+When /I press 'submit'/ do
+    click_button( 'ratings_submit' )
+end
+
+Then /movies with ratings PG and R are visible/ do
+    a = Movie.find_all_by_rating( "PG" )
+    a.each do |movie|
+        page.should have_content( movie.title )
+    end
+    a = Movie.find_all_by_rating( "R" )
+    a.each do |movie|
+        page.should have_content( movie.title )
+    end
+end
+
+And /movies with other ratings are not visible/ do
+    a = Movie.all
+    a.each do |movie|
+        if ( movie.rating != "PG" ) && ( movie.rating != "R" )
+          page.should_not have_content( movie.title )
+	end
+    end
+end
+
+Given /all ratings are selected/ do
+  visit( '/movies' )
+  ratings = Movie.find( :all, :select=>"DISTINCT movies.rating", :order=>"movies.rating" )
+  #puts ratings
+
+  ratings.each do |m|
+    step "I check \"ratings_#{m.rating}\""
+  end
+end
+
+When /I click 'submit' search from the homepage/ do
+  click_button( 'ratings_submit' )
+end
+
+#Then /I should see all the movies in movie_steps.rb/ do
+
+#end
+
+
+
