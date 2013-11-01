@@ -169,5 +169,54 @@ end
 
 #end
 
+Given /I visit movie page/ do
+    visit( '/movies' )
+end
+ 
+And /I select all ratings/ do
+  ratings = Movie.find( :all, :select=>"DISTINCT movies.rating", :order=>"movies.rating" )
+  #puts ratings
+
+  ratings.each do |m|
+    step "I check \"ratings_#{m.rating}\""
+  end
+end
+
+And /I press 'Submit'/ do
+  click_button( 'ratings_submit' )
+end
+
+When /I click sort by name/ do
+   click_link( 'title_header' )
+end
+
+Then /I should see movies sorted alphabetically/ do
+  movies = Movie.all
+  m1 = movies.first.title
+  m2 = movies.second.title
+  b = page.body
+  if ( m1 < m2 )
+      b.index( m1 ).should < b.index( m2 )
+  else
+      b.index( m1 ).should > b.index( m2 )
+  end
+end
+
+When /I click sort by date/ do
+  click_link( 'release_date_header' )
+end
+
+Then /I should see movies sorted by release date/ do
+  movies = Movie.all
+  m1 = movies.first
+  m2 = movies.second
+  b = page.body
+  if ( m1.release_date < m2.release_date )
+      b.index( m1.title ).should < b.index( m2.title )
+  else
+      b.index( m1.title ).should > b.index( m2.title )
+  end
+end
+
 
 

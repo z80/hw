@@ -41,4 +41,19 @@ Scenario: all ratings selected
   Then I should see all the movies in movie_steps.rb
 
 
+Scenario: movies are sorted alphabetically
+    Given I visit movie page
+    And I select all ratings
+    And I press 'submit'
+    When I click sort by name
+    Then I should see movies sorted alphabetically
+
+Scenario: movies are sorted by date
+    Given I visit movie page
+    And I select all ratings
+    And I press 'submit'
+    When I click sort by date
+    Then I should see movies sorted by release date
+
+
 
