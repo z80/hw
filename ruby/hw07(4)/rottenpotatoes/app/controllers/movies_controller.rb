@@ -66,8 +66,12 @@ class MoviesController < ApplicationController
 
   def similar
     id = params[:id]
-    m = Movie.find params[:id] 
-    @movies = Movie.find_all_by_director( m.director )
+    if ( id )
+      m = Movie.find params[:id] 
+      @movies = Movie.find_all_by_director( m.director )
+    else
+      redirect_to movies_path
+    end
   end
 
 end

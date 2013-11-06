@@ -71,6 +71,17 @@ When /I follow \"Find Movies With Same Director\"/ do
   visit lnk
 end
 
+Then /I should be on the Similar Movies page for \"Star Wars\"/ do
+  m = page.body.scan( /a href=\"\/movies\/(\d+)\"/ )
+  puts "+++++++++++"
+  puts m
+  m.each do |ind|
+    id = ind[0].to_i
+    expect( Movie.find( id ).director ).to eq( "George Lucas" )
+  end
+end
+
+
 
 
 
