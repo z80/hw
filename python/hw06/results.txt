@@ -8,6 +8,9 @@ hypothesis can't fit target function.
 
 7. (C)
 
-8. I get here more then 50 operations. So probably, anster should be (E) but I'm not sure.
+8. I get here 47 operations. So probably, anster should be (D) which is 45 but I'm not sure.
 
-9.
+9. Here unit is probably either any of inputs or any newron output but including inputs from 1s.
+So the answer is [A] which is 46.
+
+10. But from suggested options it seems that assumption is wrong. Unit is not perceprton output!
