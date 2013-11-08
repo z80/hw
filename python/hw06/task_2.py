@@ -122,6 +122,8 @@ inAndOutErrors( 1, 1 )
 inAndOutErrors( 1, 0 )
 inAndOutErrors( 1, -1 )
 inAndOutErrors( 1, -2 )
+for i in range( 21 ):
+    inAndOutErrors( 1, i-10 )
 
 
 
