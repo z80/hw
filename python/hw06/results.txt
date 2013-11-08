@@ -1,0 +1,13 @@
+
+1. If hypotheses set is a subset of original set, deterministic noise should 
+become at lease not smaller. It is because there could become more places where 
+hypothesis can't fit target function.
+(B)
+
+2.
+
+7. (C)
+
+8. I get here more then 50 operations. So probably, anster should be (E) but I'm not sure.
+
+9.
