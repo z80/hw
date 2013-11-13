@@ -10,14 +10,15 @@ def readData():
         for line in f:
             line = line.split() # to deal with blank 
             if line:            # lines (ie skip them)
-                line = [int(i) for i in line]
+                line = [float(i) for i in line]
                 inData.append(line)    
     with open( outFile ) as f:
         for line in f:
             line = line.split() # to deal with blank 
             if line:            # lines (ie skip them)
-                line = [int(i) for i in line]
-                outData.append(line)    
+                line = [float(i) for i in line]
+                outData.append(line)
+    return (inData, outData)
 
 def xLine( x ):
     X = []
@@ -31,14 +32,18 @@ def xLine( x ):
     X.append( math.fabs(x[0]+x[1]) )
     return X
 
-def linReg( x, k=0, wd=0 ):
+def linReg( x, wd=0, k=0 ):
     X = []
     Y = []
+    #print x
     sz = len(x)
     for i in range( sz ):
+        #print x[i][0]
+        #print x[i][1]
+        #print x[i][2]
         xx = xLine( x[i] )
         X.append( xx )
-        y.append( [ x[i][2] ] )
+        Y.append( [ x[i][2] ] )
     Y = numpy.matrix( Y )
     X = numpy.matrix( X )
     
@@ -48,7 +53,9 @@ def linReg( x, k=0, wd=0 ):
 
     # Lambda.
     if ( wd > 0 ):
-        L = numpy.identity( 8 ) * math.pow( 10.0, k )
+        lmbd = math.pow( 10.0, k )
+        L = numpy.identity( 8 ) * lmbd
+        print "lambda = ", lmbd
         XTX = XTX + L
     
     #Calc XTY
@@ -59,7 +66,9 @@ def linReg( x, k=0, wd=0 ):
     
     # Multiply W = invXTX * XTY
     W = invXTX * XTY
-    
+
+    #print "W = "
+    #print W
     return W
 
 def func( x, W ):
@@ -78,13 +87,16 @@ def func( x, W ):
 
 def inAndOutErrors( wd=0, k = -3 ):
     inX, outX = readData()
+    #print inX, len( inX )
     W = linReg( inX, wd, k )
     
     cnt = len( inX )
     Ein = 0.0
     for i in range( cnt ):
         z = func( inX[i], W )
-        if ( z * inX[2] < 0.0 ):
+        #print "z = "
+        #print z
+        if ( z * inX[i][2] < 0.0 ):
             Ein += 1.0
     Ein /= float( cnt )
     
@@ -92,11 +104,14 @@ def inAndOutErrors( wd=0, k = -3 ):
     Eout = 0.0
     for i in range( cnt ):
         z = func( outX[i], W )
-        if ( z * outX[2] < 0.0 ):
+        if ( z * outX[i][2] < 0.0 ):
             Eout += 1.0
     Eout /= float( cnt )
     
     print Ein, Eout, k
+    print " "
+    print " "
+    print " "
     return Ein, Eout
 
 inAndOutErrors()
@@ -107,6 +122,8 @@ inAndOutErrors( 1, 1 )
 inAndOutErrors( 1, 0 )
 inAndOutErrors( 1, -1 )
 inAndOutErrors( 1, -2 )
+for i in range( 21 ):
+    inAndOutErrors( 1, i-10 )
 
 
 
