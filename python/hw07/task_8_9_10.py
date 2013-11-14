@@ -6,7 +6,6 @@ import scipy.optimize
 
 from sklearn import svm
 
-clf = svm.SVC()
 
 def func( x, y, r1x, r1y, r2x, r2y ):
     ax = x - r1x
@@ -49,8 +48,8 @@ def teachPla( xx, xy, g, w ):
                 notMatch[ind] = i
                 ind += 1
         if ( ind < 1 ):
-            print( "Iterations totally {0}".format(iters) )
-            return iters
+            #print( "Iterations totally {0}".format(iters) )
+            return w
 
         cnt = ind
         #print( "iteration # {0}, not matches # {1}".format( iters, cnt ) )
@@ -63,94 +62,26 @@ def teachPla( xx, xy, g, w ):
         percepAdj( xx[ind], xy[ind], g[ind], w )
         
         iters += 1
+    return w
         
-        
-def svmFunc( a, A, X, Y ):
-    s = 0.0
-    sz = len( a )
-    aa = []
-    for i in range( sz ):
-        s -= a[i]
-        aa.append( [ a[i] ] )
-    aa = numpy.matrix( aa )
-    s += ( aa.transpose() * A * aa ).flat[0] / 2.0
-    res = s.flat[0]
-    #print "a = ", a
-    #print "A = ", A
-    #print "X = ", X
-    #print "Y = ", Y
-    print "Func = ", res
-    return res
-    
-def svmCons( a, A, X, Y ):
-    sz = len( a )
-    aa = []
-    for i in range( sz ):
-        aa.append( [ a[i] ] )
-    aa = numpy.matrix( aa )
-    s = Y.transpose() * aa
-    res = s.flat[0]
-    print "Contraint = ", res
-    return res
-    
-def svmJac( a, A, X, Y ):
-    sz = len( a )
-    j = []
-    aa = []
-    for i in range( sz ):
-        j.append( -1.0 )
-        aa.append( [ a[i] ] )
-    aa = numpy.matrix( aa )
-    s = ( aa.transpose() * A )
-    for i in range( sz ):
-        j[i] += s.flat[i]
-    print "Jac = ", j
-    return j
     
     
     
-def svm( xx, xy, y ):
+def svmSolve( xx, xy, y ):
     sz = len( y )
     X = []
     Y = []
     for i in range( sz ):
         X.append( [ xx[i], xy[i] ] )
-        Y.append( [ y[i] ] )
-    A = []
-    for i in range( sz ):
-        line = []
-        for j in range( sz ):
-            line.append( y[i]*y[j] * ( X[i][0] * X[j][0] + X[i][1] * X[j][1] ) )
-        A.append( line )
-    A = numpy.matrix( A )
-    X = numpy.matrix( X )
-    Y = numpy.matrix( Y )
-    
-    args = ( A, X, Y )
-    cons = { 'type': 'eq', 'fun': svmCons, 'args': args }
-    bnds = []
-    initial = []
-    for i in range( sz ):
-        bnds.append( (0, None) )
-        initial.append( random.uniform( 0.0, 0.0 ) )
-    print "A = "
-    print A
-    print "X = "
-    print X
-    print "Y = "
-    print Y
-    print "Contraints = "
-    print cons
-    print "Bounds = "
-    print bnds
-    res = scipy.optimize.minimize( svmFunc, initial, jac=svmJac, args=args, \
-                                  method='SLSQP', constraints=cons, \
-                                  bounds=bnds, options={ 'maxiter': 3, 'disp':True } )
-    print "SVM message is: ", res.message
-    print "SVM result is:  ", res.x
+        Y.append( y[i] )
+        
+    clf = svm.SVC( kernel='linear' )
+    clf.fit( X, Y )
+    return clf
+
     
     
-def singleRun( N=5 ):
+def singleRun( N=10, tests=1000 ):
     xx = {}
     xy = {}
     g  = {}
@@ -158,66 +89,70 @@ def singleRun( N=5 ):
     w[0] = 0.0
     w[1] = 0.0
     w[2] = 0.0
-    r1x = 2.0 * (random.random() - 0.5)
-    r1y = 2.0 * (random.random() - 0.5)
-    r2x = 2.0 * (random.random() - 0.5)
-    r2y = 2.0 * (random.random() - 0.5)
+    r1x = random.uniform( -1., 1. )
+    r1y = random.uniform( -1., 1. )
+    r2x = random.uniform( -1., 1. )
+    r2y = random.uniform( -1., 1. )
     # Setting arrays of initial points.
+    s = 0.
     for i in range(N):
-        xx[i] = 2.0 * (random.random() - 0.5)
-        xy[i] = 2.0 * (random.random() - 0.5)
+        xx[i] = random.uniform( -1., 1. )
+        xy[i] = random.uniform( -1., 1. )
         g[i]  = func( xx[i], xy[i], r1x, r1y, r2x, r2y )
+        s += g[i]
+    if math.fabs( s ) > float(N-1):
+        return ( False, None, None )
             
-    teachPla( xx, xy, g, w )
+    w = teachPla( xx, xy, g, w )
+    s = svmSolve( xx, xy, g )
+    #print "support_vectors = ", s.n_support_ 
+    #print "support_vectors = ", len( s.support_ )
+    
+    # Counting error probability
+    pE = 0.
+    sE = 0.
+    for i in range( tests ):
+        x1 = random.uniform( -1., 1. )
+        x2 = random.uniform( -1., 1. )
+        y  = func( x1, x2, r1x, r1y, r2x, r2y )
+        v = w[0] + w[1]*x1 + w[2] * x2
+        if ( v * y < 0.0 ):
+            pE += 1
+        v = s.predict( [x1, x2] )
+        if ( v * y < 0.0 ):
+            sE += 1
+    pE = float( pE ) / float( tests ) * 100.0
+    sE = float( sE ) / float( tests ) * 100.0
+    #print "E(perc) = ", pE
+    #print "E(svm)  = ", sE
+    diff = pE - sE
+    #print "svm is {0}% better".format( diff )
+        
+    return ( True, diff, len( s.support_ ) )
 
-    a = svm( xx, xy, g )
+def countIters( N = 10, tests = 1000, tries = 1000):
 
-def countIters():
-    # Tries number
-    tries = 1000
-    iters = 0
-
-    for k in range( tries ):
-        # Initial conditions.
-        xx = {}
-        xy = {}
-        g  = {}
-        w  = {}
-        w[0] = 0.0
-        w[1] = 0.0
-        w[2] = 0.0
-        r1x = 2.0 * (random.random() - 0.5)
-        r1y = 2.0 * (random.random() - 0.5)
-        r2x = 2.0 * (random.random() - 0.5)
-        r2y = 2.0 * (random.random() - 0.5)
-        # Setting arrays of initial points.
-        for i in range(N):
-            xx[i] = 2.0 * (random.random() - 0.5)
-            xy[i] = 2.0 * (random.random() - 0.5)
-            g[i]  = func( xx[i], xy[i], r1x, r1y, r2x, r2y )
-            
-        iters += teach( xx, xy, g, w )
-    iters = float(iters)
-    iters /= float(tries)
-    print( "tries = {0}".format( iters ) )
-
-    # Check perceptron precission.
-    tries = 100000
-    n = 0
+    done = 0
+    diff = 0.
+    sup  = 0
     for i in range( tries ):
-        x = 2.0 * (random.random() - 0.5)
-        y = 2.0 * (random.random() - 0.5)
-        g = func( x, y, r1x, r1y, r2x, r2y )
-        f = percep( x, y, w )
-        if ( f != g ):
-            n += 1
-    n = float( n )
-    tries = float( tries )
-    p = n / tries
-    print( "P(f!=g) is {0}".format( p ) )
+        res = False
+        while ( not res):
+            aaa, d, n = singleRun( N, tests )
+            res = aaa
+        diff += d
+        sup  += n
+        d = 100 * i / tries
+        if ( d != done ):
+            done = d
+            print "done {0}%".format( d )
+    diff /= float( tries )
+    sup   = float( sup ) / float( tries )
+    print "Diff = {0}%, n = {1}".format( diff, sup )
+        
 
 
-#countIters()
-singleRun()
+countIters()
+#singleRun()
 print( "done" )
 
