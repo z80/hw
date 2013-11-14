@@ -75,8 +75,9 @@ def svmSolve( xx, xy, y ):
         X.append( [ xx[i], xy[i] ] )
         Y.append( y[i] )
         
-    clf = svm.SVC( kernel='linear' )
-    clf.fit( X, Y )
+    #clf = svm.LinearSVC()
+    clf = svm.SVC( kernel='linear', gamma=2 )
+    clf = clf.fit( X, Y )
     return clf
 
     
@@ -127,10 +128,11 @@ def singleRun( N=10, tests=1000 ):
     #print "E(svm)  = ", sE
     diff = pE - sE
     #print "svm is {0}% better".format( diff )
+    #print s.support_vectors_
         
     return ( True, diff, len( s.support_ ) )
 
-def countIters( N = 10, tests = 1000, tries = 1000):
+def countIters( N = 100, tests = 1000, tries = 1000):
 
     done = 0
     diff = 0.
