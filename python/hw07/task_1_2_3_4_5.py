@@ -91,14 +91,14 @@ def classificationErr( cnt=25, wd=0, k = -3 ):
     W = linReg( inX, cnt, wd, k )
     
     cntTop = len( inX )
-    Ecl = 0.0
-    for i in range( cnt ):
+    Eval = 0.0
+    for i in range( cnt, cntTop ):
         z = func( inX[i], W )
         #print "z = "
         #print z
         if ( z * inX[i][2] < 0.0 ):
-            Ecl += 1.0
-    Ecl /= float( cnt )
+            Eval += 1.0
+    Eval /= float( cnt )
 
 
     cnt = len( outX )
@@ -107,9 +107,11 @@ def classificationErr( cnt=25, wd=0, k = -3 ):
         z = func( outX[i], W )
         if ( z * outX[i][2] < 0.0 ):
             Eout += 1.0
-    Eout /= float( cnt     
+    Eout /= float( cnt )
+
+    print "k = {0:.15f}".format( k ), ", Eval = {0:.15f}".format( Eval ), ", Eout = {0:.15f}".format( Eout )
     
-    return Ecl, Eout
+    return Eval, Eout
 
 classificationErr( 25, 1, 3 )
 classificationErr( 25, 1, 4 )
