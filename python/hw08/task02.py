@@ -77,19 +77,68 @@ def train( pos, neg, cc=0.01, dd=2, kk='poly' ):
     Eout = float( Eout )
     Eout /= float( sz )
     print "Ein[{0}vs{1}] = {2:.15f}, Eout = {3:.15f} support vectors number is {4}".format( pos, neg, Ein, Eout, svmSz )
-    
+
+def trainCv( pos, neg, N=100, dd=2, kk='poly' ):
+    x, y = readInFile( pos, neg )
+    cvLen = len( y ) * 9 / 10
+    EcvTotal = 0.0
+    C = [ 0.0001, 0.001, 0.01, 0.1, 1. ]
+    Cscore = [ 0, 0, 0, 0, 0 ]
+    for kkk in range( N ):
+        cvBase = random.randint(0, cvLen - 1)
+        xTrain = x[0:cvBase-1] + x[cvBase+cvLen:]
+        yTrain = y[0:cvBase-1] + y[cvBase+cvLen:]
+        xTest = x[cvBase:cvBase+cvLen]
+        yTest = y[cvBase:cvBase+cvLen]
+        Ecv = []
+        for ttt in range( len( C ) ):
+            clf = svm.SVC( kernel=kk, degree=dd, C=C[ttt], coef0=0.0, gamma=1. )
+            clf = clf.fit( xTrain, yTrain )
+            svmSz = len( clf.support_vectors_ )
+
+            sz = len( yTest )
+            E = 0
+            for i in range( sz ):
+                yy = clf.predict( xTest[i] )
+                if ( yy * y[i] < 0.0 ):
+                    E += 1
+                    E = float( E )
+                    E /= float( sz )
+            Ecv.append( E )
+        minInd = 0
+        for i in range( len( C ) ):
+            if ( Ecv[minInd] > Ecv[i] ):
+                minInd = i
+        Cscore[ minInd ] += 1
+        EcvTotal += Ecv[ minInd ]
+    EcvTotal /= float( N )
+    print "Ecv = {0:.15f}".format( EcvTotal )
+    print "Scores: ", Cscore
 #print "Value versus all other values:"
 #for i in range( 10 ):
 #    trainVsAll( i )
 print "Value against another value:"
 train( 1, 5, 2, 0.001 )
 train( 1, 5, 5, 0.001 )
+
 train( 1, 5, 2, 0.01 )
 train( 1, 5, 5, 0.01 )
+
 train( 1, 5, 2, 0.1 )
 train( 1, 5, 5, 0.1 )
+
 train( 1, 5, 2, 1. )
 train( 1, 5, 5, 1. )
+
+print "CV"
+#trainCv( 1, 5 )
+
+print "RBF"
+train( 1, 5, cc=0.01,   dd=2, kk='rbf' )
+train( 1, 5, cc=1.,     dd=2, kk='rbf' )
+train( 1, 5, cc=100.,   dd=2, kk='rbf' )
+train( 1, 5, cc=10000., dd=2, kk='rbf' )
+train( 1, 5, cc=1.0E6, dd=2, kk='rbf' )
     
 print "Done..."
 print "Biggest Ein is for 0"
@@ -97,3 +146,9 @@ print "Smallest Ein is for 1"
 print "Support vector number difference is 1854"
 
 print "Eout goes down when C goes up"
+print "Ecv is minimal for C=0.0001. But strange thing is that it happens in 100% cases..."
+print "For hte winning selection Ecv is approximately 0.001503"
+
+print "For RBF smallest Ein  is for C=1E6"
+print "For RBF smallest Eout is for C=1E4"
+
