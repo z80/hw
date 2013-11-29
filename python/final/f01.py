@@ -9,6 +9,7 @@ import random
 import scipy
 import numpy
 import scipy.optimize
+from sklearn import svm
 
 
 def elementsNumber( N = 10 ):
@@ -24,7 +25,7 @@ def elementsNumber( N = 10 ):
                     z.append( k )
     print "dim = ", len( z )
 
-elementsNumber()
+#elementsNumber()
 
 print "Task 1: None of the above [e]"
 
@@ -126,14 +127,13 @@ def linReg( x, y, convert=False, L=0. ):
     # Multiply W = invXTX * XTY
     W = invXTX * XTY
 
-    #print "W = "
-    #print W
+    #print "W = ", W
     return W
 
 def func( x, W, convert=False ):
     xx = xLine( x, convert )
     z = 0.
-    n = len( xx )
+    n = len( W )
     for i in range( n ):
         z += xx[i]*W[i]
     return z
@@ -165,23 +165,59 @@ def calcEinEout( pos, neg=None, convert=False, L = 0. ):
         neg = "all"
     print "{0} vs {1}: Ein = {2:.15f}, Eout = {3:.15f}".format( pos, neg, Ein, Eout )
 
-calcEinEout( 5, None, False, 1. )
-calcEinEout( 6, None, False, 1. )
-calcEinEout( 7, None, False, 1. )
-calcEinEout( 8, None, False, 1. )
-calcEinEout( 9, None, False, 1. )
+#calcEinEout( 5, None, False, 1. )
+#calcEinEout( 6, None, False, 1. )
+#calcEinEout( 7, None, False, 1. )
+#calcEinEout( 8, None, False, 1. )
+#calcEinEout( 9, None, False, 1. )
+print "Task 7: lowest Ein has 8 vs all: [d]"
+
+#calcEinEout( 0, None, True, 1. )
+#calcEinEout( 1, None, True, 1. )
+#calcEinEout( 2, None, True, 1. )
+#calcEinEout( 3, None, True, 1. )
+#calcEinEout( 4, None, True, 1. )
+print "Task 8: lowest Eout has 1 vs all: [b]"
+
+#for i in range( 10 ):
+#    calcEinEout( i, None, False, 1. )
+#    calcEinEout( i, None, True,  1. )
+#    print ""
+print "Task 9: actually none of the answers matches well but let it be the last one: less then 5%: [e]"
+
+#calcEinEout( 1, 5, True, 0.001 )
+#calcEinEout( 1, 5, True, 1. )
+print "Task 10: two classifiers have the same Eout: [c]"
+
+print "Task 11: answer is [c] - should be horizontal parabola and [c] is the only choise"
 
 
+x = [ [ 1., 0. ], \
+      [ 0., 1. ], \
+      [ 0., -1. ], \
+      [ -1., 0. ], \
+      [ 0., 2. ], \
+      [ 0., -2. ], \
+      [ -2., 0.] ]
+y = [ -1., -1., -1., 1., 1., 1., 1. ]
+def kern( x1, x2 ):
+    print "x1 = ", x1
+    print "x2 = ", x2
+    k = []
+    for i in range( len( x1 ) ):
+        k.append( [] )
+        for j in range( len( x2 ) ):
+            v = (x1[i][0]*x2[j][0] + x1[i][1]*x2[j][1] + 1.)**2
+            k[i].append( v )
+            
+    print "k = ", k
+    return k
 
-
-
-
-
-
-
-
-
-
-
-
+def solveSvm():
+    clf = svm.SVC( kernel=kern, C=1.0e8 )
+    clf.fit( x, y )
+    print "support vector inds: ", clf.support_
+    
+solveSvm()
+print "Task 12: number of support vectors is 5, [c]"
 
