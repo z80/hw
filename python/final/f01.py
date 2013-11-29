@@ -58,7 +58,7 @@ def readDataFile( fname, pos, neg=None ):
                     x.append( [ line[1], line[2] ] )
                 else:
                     if ( neg == None ):
-                        y.append( -1.0 )
+                        y.append( [-1.0] )
                         x.append( [ line[1], line[2] ] )
                     elif ( neg == line[0] ):
                         y.append( [-1.0] )
@@ -77,7 +77,7 @@ def readOutFile( pos, neg=None ):
 
 def loadData( pos, neg=None ):
     xTrain, yTrain = readInFile( pos, neg )
-    xTest, yTest   = readOutFile( pos, neg )
+    xTest,  yTest  = readOutFile( pos, neg )
     return xTrain, yTrain, xTest, yTest
 
 def xLine( x, convert=False ):
@@ -94,7 +94,7 @@ def xLine( x, convert=False ):
     return X
 
 def linReg( x, y, convert=False, L=0. ):
-    print "data size = ", len( y )
+    #print "data size = ", len( y )
     Y = numpy.matrix( y )
     X = []
     n = len( x )
@@ -113,8 +113,8 @@ def linReg( x, y, convert=False, L=0. ):
         else:
             n = 3
         L = numpy.identity( n ) * L
-        print "XTX = ", XTX
-        print "lambda = ", L
+        #print "XTX = ", XTX
+        #print "lambda = ", L
         XTX = XTX + L
     
     #Calc XTY
