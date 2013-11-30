@@ -34,6 +34,8 @@ print "Task 2: if H is a set of constant \
 real values mean could be another real value \
 but not one form the set so it is [b]"
 
+print "Task3: Eout-Ein doesn\'t tell anything about overfitting. Answer: [d]"
+
 print "Task 4: stochastic noise doesn not \
 depend on learning model it is a feature of the \
 data, [d]"
@@ -496,7 +498,12 @@ def zeroEin( Ntrain, tries, gamma, K ):
     zeroEin = float( zeroEin ) * 100. / float( tries )
     print "Ein = 0 in {0:.15f}% cases".format( zeroEin )
 
-zeroEin( 100, 100, 1.5, 9 )
+#zeroEin( 100, 300, 1.5, 9 )
 
-print "Task 20: answer is [d] - obvious!"
+#Ein = 0 in 9.666666666666666% cases
+print "Task 18: Ein is zero in 9.666666666666666% cases it is close to (<=10%): [a]"
+
+print "Task 19: if one point is given final probability is a product of homogeneous distribution and delta function. The result is also a delta function. [d]"
+
+print "Task 20: answer is [c] - but can't prove correctly."
            
