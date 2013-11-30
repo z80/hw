@@ -399,7 +399,7 @@ def svmVsRbf( Ntrain, Ntst, tries, gamma, K ):
                 rbfEout += 1
         if ( svmEout <= rbfEout ):
             svmWins += 1
-        print "SVM Eout = {0}, RBF Eout = {1}".format( svmEout, rbfEout )
+        print "SVM Eout = {0}, RBF Eout = {1}, iter {2}".format( svmEout, rbfEout, i )
     svmWins = float( svmWins ) / float( tries ) * 100.
     print "SVM beats RBF in {0:15f}% cases".format( svmWins )
         
@@ -407,4 +407,96 @@ def svmVsRbf( Ntrain, Ntst, tries, gamma, K ):
 #calcSvmEin0( 100, 1000, 1.5 )
 print "Task 13: SVM with RBF kernel never failes to split in-sample points. So answer is <5%: [a]"
 
-svmVsRbf( 100, 1000, 300, 1.5, 9 )
+#svmVsRbf( 100, 1000, 300, 1.5, 9 )
+
+print "Task 14: with K=9 SVM beats RBF in 86% cases, answer is >75% [e]"
+
+#svmVsRbf( 100, 1000, 200, 1.5, 12 )
+
+print "Task 15: with K=12 SVM beats RBF in 87.5% cases, answer is [d]"
+
+def compareClusters( Ntrain, Ntst, tries, gamma1, gamma2, K1, K2 ):
+    Ein1 = 0.
+    Ein2 = 0.
+    Eout1 = 0.
+    Eout2 = 0.
+    done = 0
+    for i in range( tries ):
+        xTrain, yTrain = initPts( Ntrain )
+        xTst, yTst     = initPts( Ntst )
+        mu1, W1  = solveRbf( xTrain, yTrain, Ntrain, K1, gamma1 )
+        mu2, W2  = solveRbf( xTrain, yTrain, Ntrain, K2, gamma2 )
+        ein1 = 0
+        ein2 = 0
+        for j in range( Ntrain ):
+            yy = rbfPredict( mu1, W1, gamma1, xTrain[j] )
+            if ( yy * yTrain[j] < 0. ):
+                ein1 += 1
+            yy = rbfPredict( mu2, W2, gamma2, xTrain[j] )
+            if ( yy * yTrain[j] < 0. ):
+                ein2 += 1                
+        ein1 = float( ein1 ) / float( Ntrain )
+        ein2 = float( ein2 ) / float( Ntrain )
+        Ein1 += ein1
+        Ein2 += ein2
+                
+        eout1 = 0
+        eout2 = 0
+        for j in range( Ntst ):
+            yy = rbfPredict( mu1, W1, gamma1, xTst[j] )
+            if ( yy * yTst[j] < 0. ):
+                eout1 += 1
+            yy = rbfPredict( mu2, W2, gamma2, xTst[j] )
+            if ( yy * yTst[j] < 0. ):
+                eout2 += 1                
+        eout1 = float( eout1 ) / float( Ntst )
+        eout2 = float( eout2 ) / float( Ntst )
+        Eout1 += eout1
+        Eout2 += eout2
+        d = i * 100 / tries
+        if ( done != d ):
+            print "{0}% done".format( d )
+            done = d
+    Ein1 /= float( tries )
+    Ein2 /= float( tries )
+    Eout1 /= float( tries )
+    Eout2 /= float( tries )
+    print "Ein[{0},{1}] = {2:.15f}, Eout[{0},{1}] = {3:.15f}".format( K1, gamma1, Ein1, Eout1 )
+    print "Ein[{0},{1}] = {2:.15f}, Eout[{0},{1}] = {3:.15f}".format( K2, gamma2, Ein2, Eout2 )
+     
+#compareClusters( 100, 300, 20, 1.5, 1.5, 9, 12 )
+#Ein[9,1.5] = 0.027500000000000, Eout[9,1.5] = 0.051666666666667
+#Ein[12,1.5] = 0.022500000000000, Eout[12,1.5] = 0.048333333333333
+print "Task 16: both Ein and Eout go down: [d]"
+
+#compareClusters( 100, 300, 20, 1.5, 2., 9, 9 )
+#Ein[9,1.5] = 0.018000000000000, Eout[9,1.5] = 0.045000000000000
+#Ein[9,2.0] = 0.021500000000000, Eout[9,2.0] = 0.052166666666667
+print "Task 17: both Ein and Eout go up: [c]"
+
+
+
+def zeroEin( Ntrain, tries, gamma, K ):
+    zeroEin = 0
+    done = 0
+    for i in range( tries ):
+        xTrain, yTrain = initPts( Ntrain )
+        mu, W  = solveRbf( xTrain, yTrain, Ntrain, K, gamma )
+        ein = 0
+        for j in range( Ntrain ):
+            yy = rbfPredict( mu, W, gamma, xTrain[j] )
+            if ( yy * yTrain[j] < 0. ):
+                ein += 1
+        if ( ein == 0 ):
+            zeroEin += 1
+        d = i * 100 / tries
+        if ( done != d ):
+            print "{0}% done".format( d )
+            done = d
+    zeroEin = float( zeroEin ) * 100. / float( tries )
+    print "Ein = 0 in {0:.15f}% cases".format( zeroEin )
+
+zeroEin( 100, 100, 1.5, 9 )
+
+print "Task 20: answer is [d] - obvious!"
+           
