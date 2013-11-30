@@ -5,6 +5,7 @@ Created on Thu Nov 28 13:22:41 2013
 @author: z_80
 """
 
+import math
 import random
 import scipy
 import numpy
@@ -218,6 +219,192 @@ def solveSvm():
     clf.fit( x, y )
     print "support vector inds: ", clf.support_
     
-solveSvm()
+#solveSvm()
 print "Task 12: number of support vectors is 5, [c]"
 
+
+
+def initPts( N ):
+    x = []
+    y = []
+    for i in range( N ):
+        x1, x2 = ( random.uniform( -1., 1. ), random.uniform( -1., 1. ) )
+        yy     = x2 - x1 + 0.25*math.sin( 3.1415926535*x1 )
+        if ( yy > 0. ):
+            yy = 1.
+        else:
+            yy = -1.
+        x.append( [x1, x2] )
+        y.append( yy )
+    return ( x, y )
+
+def prepareKlusters( N, K ):
+    kl = []
+    inds = []
+    for i in range( N ):
+        inds.append( random.randint( 0, K-1 ) )
+    return inds
+    
+def calcMu( x, inds, K ):
+    mu = []
+    ww  = 0.
+    for i in range( K ):
+        m = [0., 0.]
+        w = 0.
+        k = 0
+        N = len( inds )
+        for j in range( N ):
+            if ( inds[j] == i ):
+                m[0] += x[j][0]
+                m[1] += x[j][1]
+                k += 1
+        k = float( k )
+        m[0] /= k
+        m[1] /= k
+        mu.append( m )
+        
+        w = 0.
+        for j in range( N ):
+            if ( inds[j] == i ):
+                x1 = x[j][0] - m[0]
+                x2 = x[j][1] - m[1]
+                w += math.sqrt( x1**2 + x2**2 )
+        w /= k
+        ww += w
+    return (mu, ww)
+    
+def clusterIteration( x, inds0, K ):
+    N = len( inds0 )
+    inds = []
+    for k in range( N ):
+        inds.append( inds0[k] )
+
+    mu, ww = calcMu( x, inds, K )
+    res = False
+    changes = 0
+    for i in range( N-1 ):
+        for j in range( i+1, N ):
+            if ( inds[i] != inds[j] ):
+                #print "inds[i]/ inds[j]: ", inds[i], inds[j]
+                indsNew = []
+                for k in range( N ):
+                    indsNew.append( inds[k] )
+                indsNew[i], indsNew[j] = ( indsNew[j], indsNew[i] )
+                #print ""
+                #print "inds: ", inds
+                #print "indsNew: ", indsNew
+                muNew, wwNew = calcMu( x, indsNew, K )
+                if ( wwNew < ww ):
+                    #print "new value: {0}".format( wwNew )
+                    mu, ww = muNew, wwNew
+                    inds = indsNew
+                    res = True
+                    changes += 1
+    return ( res, inds, changes )
+    
+def makeKlusters( x, N, K ):
+    inds = prepareKlusters( N, K )
+    iter = 0
+    while ( True ):
+        res, inds, changes = clusterIteration( x, inds, K )
+        iter += 1
+        #print "{0} iterations performed, improvements made {1}".format( iter, changes )
+        if not res:
+            break
+    return inds
+    
+def kern( gamma, x, mu ):
+    return math.exp( -gamma*(x[0]*mu[0]+x[1]*mu[1] ) )
+    
+    
+    
+def solveRbf( x, y, N, K, gamma ):
+    # init points
+    inds = makeKlusters( x, N, K )
+    # calc centers mu[k]
+    mu, ww = calcMu( x, inds, K )
+    
+    Y = numpy.matrix( y )
+    Y = numpy.transpose( Y )
+    F = []
+    
+    for i in range( N ):
+        f = []
+        for j in range( K ):
+            f.append( kern( gamma, x[i], mu[j] ) )
+        f.append( 1. )
+        F.append( f )
+    F = numpy.matrix( F )
+    
+    FT = numpy.transpose( F )
+    W = numpy.linalg.matrix_power( FT * F, -1 ) * FT * Y
+    
+    w = []
+    for i in range( K+1 ):
+        w.append( W.A[i][0] )
+
+    return mu, w
+
+def rbfPredict( mu, W, gamma, x ):
+    sz = len( mu )
+    res = 0.
+    for i in range( sz ):
+        res += W[i] * math.exp( -gamma*(x[0]*mu[i][0] + x[1]*mu[i][1]) )
+    res += W[sz]
+    if ( res > 0. ):
+        return 1.
+    else:
+        return -1.
+    
+def solveSvm( x, y, g ):
+    N = len( y )
+    clf = svm.SVC( kernel='rbf', C=1.0e8, gamma=g )
+    clf.fit( x, y )
+    rbfEin = 0
+#    for i in range( N ):
+#        yy = clf.predict( x[i] )
+#        if ( yy * y[i] < 0. ):
+#            rbfEin += 1
+#    rbfEin = float( rbfEin ) / float( N )
+#    print "rbfEin = {0:.15f}".format( rbfEin )
+    return rbfEin, clf
+
+def calcSvmEin0(N, tries, gamma ):
+    cnt = 0
+    for i in range( tries ):
+        x, y = initPts( N )
+        e = solveSvm( x, y, gamma )
+        if ( e > 0. ):
+            cnt += 1
+    cnt = float( cnt ) / float( tries ) * 100.
+    print "mean Ein = {0}%".format( cnt )
+    return cnt
+
+def svmVsRbf( Ntrain, Ntst, tries, gamma, K ):
+    svmWins = 0
+    for i in range( tries ):
+        xTrain, yTrain = initPts( Ntrain )
+        e, clf = solveSvm( xTrain, yTrain, gamma )
+        mu, W  = solveRbf( xTrain, yTrain, Ntrain, K, gamma )
+        xTst, yTst = initPts( Ntst )
+        
+        svmEout = 0
+        rbfEout = 0
+        for j in range( Ntst ):
+            yy = clf.predict( xTst[j] )
+            if ( yy * yTst[j] < 0. ):
+                svmEout += 1
+            yy = rbfPredict( mu, W, gamma, xTst[j] )
+            if ( yy * yTst[j] < 0. ):
+                rbfEout += 1
+        if ( svmEout <= rbfEout ):
+            svmWins += 1
+        print "SVM Eout = {0}, RBF Eout = {1}".format( svmEout, rbfEout )
+    svmWins = float( svmWins ) / float( tries ) * 100.
+    print "SVM beats RBF in {0:15f}% cases".format( svmWins )
+        
+        
+#calcSvmEin0( 100, 1000, 1.5 )
+print "Task 13: SVM with RBF kernel never failes to split in-sample points. So answer is <5%: [a]"
+
+svmVsRbf( 100, 1000, 300, 1.5, 9 )
