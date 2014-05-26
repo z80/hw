@@ -1,0 +1,62 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pitch: matrix( [ cos(%pi), 0, -sin(%pi) ], 
+             [ 0,          1,  0        ], 
+             [ sin(%pi),   0,  cos(%pi) ] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: transpose( pitch );
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill( all );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y: %pi/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+yaw: matrix( [ cos(y),  sin(y), 0 ], 
+             [ -sin(y), cos(y), 0 ], 
+             [ 0,       0,      1 ] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pitch: matrix( [ 1, 0, 0 ], 
+               [ 0, 1, 0 ], 
+               [ 0, 0, 1 ] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: %pi/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+roll: matrix( [ 1, 0,       0 ], 
+              [ 0, cos(r), sin(r) ], 
+              [ 1, -sin(r), cos(r) ] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: roll . pitch . yaw;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
