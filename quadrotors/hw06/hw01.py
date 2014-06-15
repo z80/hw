@@ -41,7 +41,8 @@ class UserCode:
         '''
         
         #TODO: Predict the next state
-        x_p = np.zeros((4,1))
+        #x_p = np.zeros((4,1))
+        x_p = np.dot( A, x )
         
         return x_p
     
@@ -63,7 +64,8 @@ class UserCode:
         '''
         
         #TODO: Correct the current state prediction with the measurement
-        x = np.zeros((4,1))
+        #x = np.zeros((4,1))
+        x = x_p + np.dot( k, z - np.dot( H, x_p ) )
 
         return x
     
