@@ -110,8 +110,10 @@ class UserCode:
         '''
         
         # TODO: implement correction of predicted state x_predicted
+        mu = x_predicted + np.dot( K, z - z_predicted )
             
-        return x_predicted
+        #return x_predicted
+        return mu
     
     def correctCovariance(self, sigma_p, K, H):
         '''
@@ -139,8 +141,26 @@ class UserCode:
         '''
         
         # TODO: implement computation of H
+        x_m = marker_position_world
+        c = math.cos(x[2])
+        s = math.sin(x[2])
+        H11 = -c
+        H12 = -s
+        H13 = c*( x_m[1]-x[1] ) - s*(x_m[0] - x[0])
+        H21 = s
+        H22 = -c
+        H23 = -s*( x_m[1]-x[1] ) - c*( x_m[0] - x[0] )
+        H31 = 0.0
+        H32 = 0.0
+        H33 = -1.0
+        H = np.array([
+            [ H11, H12, H13 ], 
+            [ H21, H22, H23 ],
+            [ H31, H32, H33 ]
+        ])
         
-        return np.zeros((3,3))
+        #return np.zeros((3,3))
+        return H
     
     def state_callback(self, t, dt, linear_velocity, yaw_velocity):
         '''
