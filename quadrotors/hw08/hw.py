@@ -35,9 +35,19 @@ class UserCode:
         '''
         markers = [
              [0, 0], # marker at world position x = 0, y = 0
-             [2, 0],  # marker at world position x = 2, y = 0
-             [0, 2],
-             [-2, -2]
+             [1.5, 0.5],  # marker at world position x = 2, y = 0
+             [4.5, 0.5],
+             [1.5, 3.5],
+             [4.5, 3.5],
+             [7.0, 5.5], 
+             [4.0, 5.5],
+             [4.0, 8.5],
+             [7.0, 8.5],
+             [10.0,9.5],
+             [9.5,11.0],
+             [10.0,12.5],
+             [8.0,11.0],
+             [6.0,11.0]
         ]
         
         #TODO: Add your markers where needed
@@ -60,7 +70,7 @@ class UserCode:
         
         #return np.ones((2,1)) * 0.1, 0
 
-        eps = 1.0
+        eps = 0.2
         
         if ( self.abs( self.x[0] - self.sp[0] ) < eps ) and ( self.abs( self.x[1] - self.sp[1] ) < eps ):
             self.markerInd = (self.markerInd + 1) % len( self.markers )
@@ -78,11 +88,11 @@ class UserCode:
         da = math.atan2( dy, dx ) - self.x[2]
 
         # xy control gains
-        Kp_xy = 0.1 # xy proportional
+        Kp_xy = 1 # xy proportional
         Kd_xy = 0.5 # xy differential
         
         # height control gains
-        Kp_z  = -0.02 # z proportional
+        Kp_z  = 0.1 # z proportional
         Kd_z  = 0.5 # z differential
         
         self.Kp = np.array([[Kp_xy, Kp_xy, Kp_z]]).T
