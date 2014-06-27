@@ -4,28 +4,11 @@ from plot import plot, plot_trajectory, plot_covariance_2d
 
 class UserCode:
     def __init__(self):
-        pass
-        
-    def get_markers(self):
-        '''
-        place up to 30 markers in the world
-        '''
-        markers = [
-             [0, 0], # marker at world position x = 0, y = 0
-             [2, 0]  # marker at world position x = 2, y = 0
-        ]
-        
-        #TODO: Add your markers where needed
-
-        # state vector [x, y, yaw] in world coordinates
-        self.x = np.zeros((3,1))
-        self.sp = markers[0]
-        
         # 3x3 state covariance matrix
         self.sigma = 0.01 * np.identity(3) 
 
-        pos_noise_std = 0.0
-        yaw_noise_std = 0.0
+        pos_noise_std = 0.01
+        yaw_noise_std = 0.01
         self.Q = np.array([
             [pos_noise_std*pos_noise_std,0,0],
             [0,pos_noise_std*pos_noise_std,0],
@@ -33,13 +16,32 @@ class UserCode:
         ])
 
         #measurement noise
-        z_pos_noise_std = 0.0
-        z_yaw_noise_std = 0.0
+        z_pos_noise_std = 0.01
+        z_yaw_noise_std = 0.01
         self.R = np.array([
             [z_pos_noise_std*z_pos_noise_std,0,0],
             [0,z_pos_noise_std*z_pos_noise_std,0],
             [0,0,z_yaw_noise_std*z_yaw_noise_std]
         ])
+        # state vector [x, y, yaw] in world coordinates
+        self.x = np.zeros((3,1))
+        self.markers = self.get_markers()
+        self.sp = self.markers[0]
+        self.markerInd = 0
+        
+    def get_markers(self):
+        '''
+        place up to 30 markers in the world
+        '''
+        markers = [
+             [0, 0], # marker at world position x = 0, y = 0
+             [2, 0],  # marker at world position x = 2, y = 0
+             [0, 2],
+             [-2, -2]
+        ]
+        
+        #TODO: Add your markers where needed
+
 
         
         return markers
@@ -57,10 +59,43 @@ class UserCode:
         '''
         
         #return np.ones((2,1)) * 0.1, 0
+
+        eps = 1.0
+        
+        if ( self.abs( self.x[0] - self.sp[0] ) < eps ) and ( self.abs( self.x[1] - self.sp[1] ) < eps ):
+            self.markerInd = (self.markerInd + 1) % len( self.markers )
+            self.sp = self.markers[ self.markerInd ]
+        
         self.x = self.predictState(dt, self.x, linear_velocity, yaw_velocity)
+
+        dx = self.sp[0] - self.x[0]
+        dy = self.sp[1] - self.x[1]
+        A = self.rotation( self.x[2] ).T
+        r = np.array( [ dx, dy ] ).T
+        r = np.dot( A, r )
+        dx = r[0]
+        dy = r[1]
+        da = math.atan2( dy, dx ) - self.x[2]
+
+        # xy control gains
+        Kp_xy = 0.1 # xy proportional
+        Kd_xy = 0.5 # xy differential
+        
+        # height control gains
+        Kp_z  = -0.02 # z proportional
+        Kd_z  = 0.5 # z differential
+        
+        self.Kp = np.array([[Kp_xy, Kp_xy, Kp_z]]).T
+        self.Kd = np.array([[Kd_xy, Kd_xy, Kd_z]]).T
+
+        ux = Kp_xy * dx
+        uy = Kp_xy * dy
+        ua = Kp_z  * da
+
+        print( self.markerInd, self.sp[0], self.sp[1], self.x[0], self.x[1], da )
         
 
-        return np.array( [ self.x[0], self.x[1] ] ), self.x[2]
+        return np.array( [ ux, uy ] ), ua
 
     def measurement_callback(self, marker_position_world, marker_yaw_world, marker_position_relative, marker_yaw_relative):
         '''
@@ -83,7 +118,14 @@ class UserCode:
         self.x = self.correctState(K, self.x, z, z_predicted)
         self.sigma = self.correctCovariance(self.sigma, K, H)
         
-        self.visualizeState()        
+        self.visualizeState()
+
+
+    def abs( self, x ):
+        if ( x > 0.0 ):
+            return x
+        else:
+            return -x
     
     def rotation(self, yaw):
         '''
