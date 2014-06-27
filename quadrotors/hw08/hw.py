@@ -102,7 +102,7 @@ class UserCode:
         uy = Kp_xy * dy
         ua = Kp_z  * da
 
-        print( self.markerInd, self.sp[0], self.sp[1], self.x[0], self.x[1], da )
+        #print( self.markerInd, self.sp[0], self.sp[1], self.x[0], self.x[1], da )
         
 
         return np.array( [ ux, uy ] ), ua
