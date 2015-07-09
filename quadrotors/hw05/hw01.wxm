@@ -41,7 +41,31 @@ test_variance( x );
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-test_covariance( x );
+1/2*(0.25+0.25) = 0.25;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+( (-1-1.2)^2+(2-1.2)^2+(3-1.2)^2+(1-1.2)^2+(1-1.2)^2 ) / 4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqrt(2.2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(-1+2+3+1+1)/5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+GPS
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+lat: 5.4477688039E-6 * 111195.38097356868;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lon: 9.89285349017E-6 * 74246.69042433369;
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
