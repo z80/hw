@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    
+    <link href="./Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- Due to some reason dowloaded bootstrap conflicts with jQuery and 
+    accordion doesn't work at all-->
+    <!--
+    <script type="text/javscript" src="./Scripts/boostrap.min.js"></script>
+    <script type="text/javscript" src="./Scripts/jquery-2.1.4.min.js"></script>
+    
+    -->
+    
+    <!-- I have to provide links to javascript parts directly to WEB as some combinations don't work together -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>    
+    
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <h1 align="center">Submit Album</h1>
+      </div>
+      
+      
+      <div class="panel-group" id="my-accordion-id">
+        <!-- accordion content -->
+        <div class="panel panel-default">
+          <!-- panel content -->
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#my-accordion-id" href="#my-accordion-id-1">
+                <!-- heading text -->
+                Album title and Artist
+              </a>
+            </h4>
+          </div>
+          
+          <div id="my-accordion-id-1" class="panel-collapse collapse in">
+            <!-- content -->
+            <div class="panel-body">
+              <!-- content -->
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="panel panel-default">
+          <!-- panel content -->
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#my-accordion-id" href="#my-accordion-id-2">
+                <!-- heading text -->
+                Album title and Artist
+              </a>
+            </h4>
+          </div>
+          
+          <div id="my-accordion-id-2" class="panel-collapse collapse">
+            <!-- content -->
+            <div class="panel-body">
+              <!-- content -->
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-default">
+          <!-- panel content -->
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#my-accordion-id" href="#my-accordion-id-3">
+                <!-- heading text -->
+                Album title and Artist
+              </a>
+            </h4>
+          </div>
+          
+          <div id="my-accordion-id-3" class="panel-collapse collapse">
+            <!-- content -->
+            <div class="panel-body">
+              <!-- content -->
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
+          </div>          
+        </div>
+      </div>
+      
+    </div>
+  </body>
+</html>
