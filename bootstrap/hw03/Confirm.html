@@ -5,52 +5,50 @@
   </head>
 
   <body>
-
-    <div class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->    
-
     <div class="container-fluid">
+      <div class="row">
+        <!-- Button for launching modal dialog -->
+        <button type="button"
+                class="btn btn-success col-sm-push-4 col-sm-4"
+                data-toggle="modal"
+                data-target="#myModal">
+          Open dialog
+        </button>
+      </div>
 
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="false">
-        <div class="modal-dialog">
+      <!-- Modal dialog itself-->
+      <div class="modal fade"
+           id="myModal"
+           tabindex="-1"
+           role="dialog"
+           aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
+            <!-- Modal header-->
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModal-label">Modal title</h4>
+              <!-- This is "X" to close the dialog-->
+              <button type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <!-- Here id should be the same as aria-labbeledby attribute of the very top <div>.-->
+              <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
             </div>
             <div class="modal-body">
-              <p>dgdsfgsdf</p>
+              Are you sure you wish to submit this album?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save</btn>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary">Confirm</button>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <button class="btn btn-success col-md-4 col-md-offset-4" data-toggle="modal" data-target="#myModal">Dialog</button>
-      </div>
-
     </div>
 
-    <script src="./Scripts/jquery.min.js"/>
-    <script src="./Scripts/bootstrap.min.js"/>
+    <script src="./Scripts/jquery-2.1.4.min.js"></script>
+    <script src="./Scripts/bootstrap.min.js"></script>
   </body>
 </html>
