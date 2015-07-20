@@ -1,0 +1,84 @@
+In this video
+you will get some R code
+useful for visualizing hypothesis tests,
+and also to think about one-tailed and two-tailed tests,
+type 1 and type 2 errors and statistical power.
+Imagine that
+the red line here is a
+sampling distribution of the so-called
+null hypothesis and
+the blue line that I have drawn here
+is the sampling distribution
+for the alternative hypothesis. Imagine that
+we draw many samples from
+the null hypothesis population.
+Very often the mean will
+end up somewhere here, close to 80,
+but it's possible also to get a mean
+of 100, or even 120 although not so
+often. Here I have drawn a vertical line
+with abline() verticle,
+at the 95th percentile
+of the red distribution. It means that
+this line is drawn where
+5 percent of the
+population is to the right of the
+line. This would be
+the cutoff for a one-tailed
+test. So if we get a value
+higher than this line
+we are going to reject
+the null hypothesis and we will assume
+at the alternative hypothesis,
+the blue distribution, is actually the correct one.
+It means that sometimes
+we will make an error, the so-called type 1 error, or alfa error.
+In five percent of the cases
+we will get a mean higher than this value,
+just by chance. Let's look at
+what it would look like to do a
+two-tailed test. You see the same distributions again
+the red belongs to the null hypothesis
+the blue could be a alternative hypothesis
+distribution. Now I have drawn
+new ablines, two of them.
+Notice how I have changed
+so I don't take the 95th percentile
+instead I leave out 2,5 percent to the left and 2.5 percent to the right, so together
+this area plus this area is 5 percent of all the samplings I'm likely to draw 
+from the null hypothesis distribution.
+Here is some code for you
+that colors the so-called rejection
+area red so whenever you
+draw a sample and the mean is lower than 60 and
+higher than 100 then you will reject
+the null hypothesis in a two-sided test.
+So, we have talked about that in five percent of the cases
+where your sample is actually drawn from that null hypothesis population
+we will still reject the null hypothesis 
+and commit a type 1 error but
+let's imagine for a moment that the
+alternative hypothesis
+is the true one.
+So let's imagine that
+the blue distribution here is actually the true
+and you can see that
+many times we will draw a sample with
+a high mean and we are going to reject
+the red null hypothesis, but there is
+this shaded area here, the so-called beta error
+or type two error. Those are samplings
+that actually come from the alternative hypothesis
+distribution but they happen to be close
+to the null hypothesis and therefore
+we will not reject the false
+null hypothesis.
+So here is some code for shading
+the area one minus beta.
+As you can see this
+area are all of the samplings
+from the alternative hypothesis
+that happen to be true in this case, that
+would lead to a rejection of the false null hypothesis.
+This is also called the statistical
+power of the test.

@@ -1,0 +1,63 @@
+Let's summarize
+what we have learned about statistical testing
+through the z-test. We take a sample from a population
+such as the blood pressure of one single person.
+In the so-called null hypothesis
+we assume that the sample was taken from
+a population with a certain mean and
+a certain standard deviation. By transforming
+our variable X to Z,
+the standard normal distribution, recall the formula, 
+we can calculate how probable it would be
+on repeated samplings to get
+a measurement that deviates this much
+or even more from the population mean.
+This probability
+is called the p-value and if the p-value is very low,
+we may choose to reject the null hypothesis,
+and assume that our sample belongs to a different distribution - 
+the alternative distribution. But what if our sample were
+a randomly selected group of people
+instead of one person? We have measured their
+blood pressure and calculated the mean blood pressure of the group.
+Recall from the central limit theorem
+that collecting the means from repeated samplings
+will yield a sampling distribution.
+The mean of the sampling distribution
+is going to be similar to the population mean
+but the standard deviation of the sampling distribution
+will be smaller than the population standard deviation.
+Furthermore the standard deviation of 
+the sampling distribution will depend
+on the sample size - also called N. 
+In fact you can calculate
+the standard deviation of the sampling distribution
+by taking the standard deviation
+of the population and dividing
+by the square root of N (the sample size).
+Look at
+how this effects our Z test formula.
+Our variable
+is now the sample mean. We denote this x-bar (x̄). 
+To transform
+x-bar to Z, the first step
+is to subtract with the population mean.
+We denote this mu (μ). Secondly
+we divide by the standard deviation
+of the sampling distribution and we now
+know that this is the standard deviation
+of the population. We denote this sigma (σ).
+Divided by the square root of N.
+We have now
+transformed our measurement to Z.
+This allows us again to lookup
+how common it would be on repeated samplings
+to get the mean differing this much
+or even more from the population mean. You have now seen the difference
+between a Z-test for a single observation
+and a Z-test for a sample mean.
+By looking at the formula for the Z test
+you will realize that the Z-test is
+only applicable when both
+the mean and the standard deviation
+of the population are known.

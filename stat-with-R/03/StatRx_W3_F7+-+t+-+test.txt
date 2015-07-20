@@ -1,0 +1,83 @@
+In this
+video I will talk about the t-test. We will compare the
+t-test and z-test to practice how to
+understand and choose between statistical tests.
+The t-test was
+developed and published in 1908
+by William Gosset, a statistician
+and chemist by the
+Guinness brewery in Dublin. Many breweries over the world such as
+Guinness or Carlsberg
+are famous contributors of scientific
+advances, in this case statistics.
+The t-test is sometimes referred to
+as the student's t-tests. This is because
+Guinness wouldn't allow Gosset to publish his
+work under his own name so he used
+"Student" as a pseudonym. Gosset had to solve a problem
+related to inferring from small sample sizes.
+And the context was process control sampling in the brewery.
+When the standard deviation
+of the population is known you can use
+the z-test.
+Remember the formula.
+Sometimes the standard deviation of the population is
+unknown so you will have to infer
+the population standard deviation from the sample standard deviation
+this we denote as S.
+And here you can see in the t-test formula.
+The result
+from the t-test formula T is not
+normally distributed. It follows the broader
+T distribution. Our
+estimate of the population standard deviation
+grows better as sample sizes grow larger.
+So there is one T distribution
+for each sample size,
+or more generally for each
+degree of freedom. At sample sizes larger
+than 300, the T distribution will be very similar to a Z distribution.
+Let's work through the formulas
+of some statistical tests, so-called
+test functions. I want you to pay attention to
+the similarities. The test functions
+all express some difference, replacing
+any measurement unit such as centimeter
+or kilogram with the variability
+as the new unit.
+The goal is to find out if a difference is
+large or negligible given the variability.
+Whenever you encounter
+the test function of a statistical test
+explore it carefully. What
+needs to be known for the test to be applicable?
+Greek letter abbreviations
+such as mu (μ), sigma (σ),
+indicate that the
+population parameters, mean
+and standard deviation needs to be known.
+On the other hand latin letter abbreviations
+such as: X-dash (x̄) or
+S indicate that you need to use
+the mean and standard deviation of the sample.
+Look at the numerator.
+Here some difference is
+expressed, like the difference between a sample
+and the mean of a null hypothesis.
+The question you are asking is
+shown in the numerator.
+Look at the denominator. Here you will find
+an expression of the variability.
+in the division your measurement unit such as kilogram
+or centimeter will be cancelled out.
+Each time you take a new sample, you expect
+to get a new value from your test function.
+The only thing we know is how
+the test function value will be distributed
+over repeated samplings.
+Measuring areas under the distribution curves
+allows us to report the p-value,
+how common your sample would be given that the null hypothesis
+is true.
+Now you're equipped with a few tricks how to explore and understand
+test functions.

@@ -1,0 +1,188 @@
+The purpose of this video is to get you
+up and running with calculating t-tests
+in R. You will also get access to
+unlimited excercises for interpreting
+t-tests. You will be using the function
+t.test(), so let's start
+by looking at the R documentation page
+for the function t.test(). Here are some
+important arguments for the function
+that are connected to the kind of hypothesis
+and alternative hypothesis that is relevant for
+your experiment. So we talked
+earlier about one-tailed tests.
+And the one-tail test
+can be defined either
+as less or greater.
+And a two-tailed test is called
+two-sided in this function.
+Your t-test can be a group-wise
+test, comparing the mean of 
+two independent groups. In that case, you have to give the argument
+"paired=FALSE".
+But your t-test could also
+be for a repeated measures
+case where one subject has been measured
+twice. In this case
+you have to set the argument
+paired to TRUE. Also pay attention
+to the argument equal variants (var.qual). 
+So to calculate the classical t-test
+you will assume that the variants in the two 
+compared groups should be
+equal. Then you have to set the argument
+var.equal to TRUE.
+If the argument var.equal
+is set to FALSE,
+then you will calculate a special kind
+of t-test called the welsh test, 
+that compensates for
+different variation
+in the two groups by calculating
+a different
+degree of freedom for the test.
+Okay, so let's imagine that
+you got
+the data in some kind of
+spreadsheet program. So I will use ctrl + c
+to copy the data and we can imagine
+that the dataset contains 
+weights in kilogram
+of persons, and I have named the two groups
+A and B. Now we go back and I will use the function
+read.table(), setting the argument
+to "clipboard" and header=T (true)
+So let's try
+what will happen if I just throw in
+weight into the function
+t.test()?
+This works but it might not be what you had
+wished for so if I just put in
+weight into t-test it will calculate the One sample t-test.
+So you can see that
+from the degrees of freedom 27
+that R
+considers the 28 measurements to be
+one group and the
+alternative hypothesis is that
+the mean of this group is not
+equal to 0 so this is not
+exactly what we wished for. Maybe it's more common that you would like to
+compare the means of these two
+groups. Let's say those
+were from two groups of people
+who used a different kind of diet.
+So here
+as argument to t.test I put in
+A from weight (weight$A) and B from weight (weight$B). 
+Now you can see that
+R has calculated the so-called welsh two sample t-test.
+It means that
+it considers the data to be from
+two independent groups. The alternative hypothesis
+is that the true difference in
+means is
+not equal to 0.
+R calculates the mean value of
+each group and reports this and you can see from the degrees
+of freedom that it is a strange number, 25.684.
+That's the
+compensated degrees of freedom that takes into account
+that the variabilitity is different in the two groups.
+Probably it's more common
+that you would assume the same
+variability in the groups that you
+compare, so then you would add the argument
+var.equal=T (true).
+You will get back the result table for a classical
+two sample t-test so here the degrees of
+freedom is 26, it's
+28 measurements minus 1
+per group.
+And the alternative hypothesis is still that the true difference in mean is not equal to
+0.
+Here we can see again reported the means of
+each group and
+the p-value was calculated to be
+0.077
+if I round it.
+So it means that the probability to
+draw two samples from the same population
+and get
+this difference between the means is actually close to
+eight percent chance so normally
+in this case we would not reject the null hypothesis.
+We cannot conclude that these two groups
+differ in mean.
+But what if this was a different
+experiment where the values of A
+and B are logically coupled
+in pairs? Then we would set
+the argument paired=T (true). 
+Here you will instead get
+reported the mean of the differences
+in the pairs of values between
+A and B and this mean is
+-6.9. Here you can see from
+the p-value 0.027
+that the probability
+that the mean paired differences in
+two groups would be 6.9
+is quite a bit lower than 5 percent.
+So at the 5 percent level
+we would here reject the null hypothesis,
+and conclude that they seem to be a difference
+between the two groups. Maybe it was measurement of weights
+before and after some kind of intervention like a diet.
+Okay, finally I would like to share with you
+the function that I use
+to create new t-tests for my examinations.
+And this might be useful for you if you would like
+to get more exercise to inspect
+and interpret the result of t-tests.
+So first I will run a number of
+lines of code and 
+this is actually a new function, so I create a function called
+ttest.for.examination.
+I fill this new object with a function
+and the function takes four arguments: number of subjects or measurements,
+the mean value of each group, the standard deviation.
+Let's see now what happens if
+we run this function.
+So I will back up a little bit for you to see
+what happens. So after
+creating the function
+I used the function ttest.for.examination() and I put in
+the number of measurements to 13,
+the mean of the first group should be 90, the mean of the second group
+should be 105.
+Quite a large difference. And the standard deviation should be 10.
+I get a report back here, a printout of the
+arguments that I passed to my function.
+I can see the values that have been
+randomly created for the two groups.
+And now I see first the result table for 
+a two sample t-test and a result
+table for a paired t-test.
+So here in both cases the p-values were
+very low, maybe we should try
+to create examples with a smaller
+difference between the
+means. Let's try this.
+Let's set the means to 92 and 10 and the standard deviation to
+10. And in this case
+we get quite high p-values so
+the probability to get
+the difference 94 to 96.9
+is actually almost 50 percent
+chance to draw this 
+if we draw 2 samples from the same population so here
+we cannot reject
+our null hypothesis.
+So as long as you
+run the same command again and again
+you will get new
+examples where you can compare. You see the
+values and you see the result tables
+for a two-sample t-test and a paired t-test
+for the same set of randomly generated data.

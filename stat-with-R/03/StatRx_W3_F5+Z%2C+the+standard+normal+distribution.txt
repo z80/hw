@@ -1,0 +1,113 @@
+When a population is known to follow the normal distribution
+you just need to know the mean
+and the standard deviation and now
+you can draw a graph showing the whole population.
+Remember that there are many
+normal distributions, all with a specific mean
+and a specific standard deviation. How
+tall are Swedish men? On average
+182 centimeters, with the standard deviation
+of seven centimetres. What is the world population
+blood pressure? On average ninety,
+with a standard deviation of 10.
+You can often see
+this kind of annotation. Let's say
+we denote blood pressure with X. It's normally distributed
+therefore the tilde (~) and N. And between parentheses
+we write 90 for the mean and
+10 for the standard deviation. 
+Here is a graph of the world population
+and their blood pressures. Imagine that
+each person occupies an
+equal space underneath this curve, so
+all of you with blood pressure ninety
+will be in the middle of this graph. How can we find
+the number of persons at each value
+for the blood pressure? Well, we can't
+keep a table for each possible normal distribution.
+Instead there is one table
+for the so-called standard normal distribution
+also called Z.
+Z is normally distributed. It has
+a mean of zero and a standard deviation
+of one. The area
+under the Z curve equals one for a very good reason:
+it makes it easy to calculate probabilities.
+So the probability that
+I will pick a person that has any blood pressure
+will be one. What
+is the probability that I would pick a person
+with a blood pressure 90 or higher?
+Since 90 divides
+the curve in two halves, the probability will be
+50 percent. The
+area under half of this curve equals 0.5.
+It's easy to transform any
+normally distributed variable to
+the standard normal distribution as long as you know
+the mean and the standard deviation of your variable. Start by subtracting
+the mean from each measurement.
+So, I'm 190 centimetres tall
+subtract 182 and I we get the value
+8 centimeters. In the next step,
+divide each value with the standard deviation
+so 8 centimeters divided by 7 centimeters
+will be approximately 1.14.
+Notice how the unit centimeter
+disappears in this operation.
+So now
+we have dropped the unit for the measurement
+and instead we describe the
+deviation from the mean using
+standard deviation as the unit.
+This is excellent, it allows us to take a sample
+and then describe how much it deviates
+from a hypothesized population,
+the so-called null hypothesis.
+By looking up the area under the Z curve
+from your measurement and then further away from the mean
+you will be able to tell how
+common it would be to to take such a sample
+or a more extreme sample. This
+area is also referred to as the p-value.
+If the sample deviates a lot from the mean
+we are going to reject the null hypothesis
+and state that this sample probably belongs
+to some other distribution with a different mean.
+This is called the alternative hypothesis.
+A common choice is to reject
+the null hypotheses if the p-value
+is lower than 0.05.
+This means that if you would make 100
+samplings and those samplings are really from
+the null hypothesis population
+during your 100 samplings you will probably
+on average reject your null hypothesis
+five times although
+the null hypothesis was true.
+Using the Z distribution to decide whether a sample belongs
+to a population or not is actually
+a hypothesis test and as such
+it's called the Z test.
+What conditions need to be fulfilled
+for you to use a Z test? 
+Well, the test applies to
+data on interval or ratio scale.
+The population should follow the normal distribution
+and you need to know the population mean
+and standard deviation.
+Only then you can use the formula to transform
+your distribution to the Z distribution.
+Secondly, you need to look at the null hypothesis of the Z test
+and see if it matches the question you want to ask.
+The null hypothesis asks whether
+a sample belongs to
+a population with a certain mean. So if your question
+is about a mean, this might be a good choice.
+If your question is about the median,
+the variation or some other aspect
+then you may have to go to a different test.
+We talked about how to transform a normally distributed variable
+to the Z variable. 
+We talked about how and when this can be used
+for hypothesis testing. 

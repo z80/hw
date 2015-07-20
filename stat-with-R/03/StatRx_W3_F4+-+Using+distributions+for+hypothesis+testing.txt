@@ -1,0 +1,49 @@
+Let's talk about
+how we can use knowledge about distributions
+to construct statistical tests. For this purpose
+I will talk about the concepts null hypothesis
+and p-value. Here
+you can see body lengths of a population of Swedish men
+with a mean of 182 centimetres
+and a standard deviation of seven centimeter.
+We assume here that body weight (length?)
+is roughly normally distributed.
+If you would take random sample from this population,
+just one person, it's not so common that you would pick a person
+that has exactly the mean height,
+182 centimeter. Although
+182 centimetres is the most common measurement
+there are much more persons
+in the interval 170-179 centimeters
+So how can we use the knowledge about
+the population mean? Imagine
+I am the random sample, my height is 190 centimeter.
+Our null hypothesis
+is that I belong
+to the population Swedish men. We can use the knowledge about
+the height distribution, the mean,
+the standard deviation, and the shape of the curve
+to calculate how common it would be
+to randomly select a person who is
+190 centimetres tall or taller.
+This is the area under the curve to the right of 190 centimetres,
+and it turns out to be 0.13,
+if the total area under the curve
+is equal to 1. In fact
+we are more interested in measuring just how common it would be to sample
+person who deviates 8 centimeter
+from the mean, so we would sum up
+the area to the right of 190 centimetres
+plus the area to the left
+of 174 centimetres.
+This sums up to 0.26.
+Imagine I would sample
+100 swedes and I would reject the null hypothesis
+each time I get a p-value of 0.02
+or smaller. This means that on
+average I would make two mistakes
+if I do 100 samplings.
+What you have seen here
+is a very common strategy for constructing
+a statistical test using knowledge
+about a population.
