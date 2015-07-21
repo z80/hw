@@ -118,5 +118,14 @@ length(keep)
 head(keep)
 trimmed <- apply(ME,1,function(ME){mean(ME, trim=0.05)})
 
+my.t.test <- function( row )
+{
+  res <- t.test( row[1:12], row[13:24], var.equal=T )
+  return( res$p.value )
+}
 
+#p <- t.test( ME[1, 1:12], ME[1,13:24], var.equal=T )
+
+p <- apply( ME, 1, my.t.test )
+length( which(p<=0.05) )
 
