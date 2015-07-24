@@ -115,8 +115,9 @@ length(which(ME<=0))
 length(which(ME>=0))
 keep <- (apply(ME[,1:12],1,mean) > 0) & (apply(ME[,13:24],1,mean) > 0)
 length(keep)
+sum(keep)
 head(keep)
 trimmed <- apply(ME,1,function(ME){mean(ME, trim=0.05)})
-
+?p.value
 
 
