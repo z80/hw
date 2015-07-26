@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    JavaScript Example
+  </title>
+  <script type="text/javascript">
+    function myNewFunction()
+    {
+      alert( "Howdy!" );
+    }
+
+    //myNewFunction();
+    function myNewFunction( value )
+    {
+      alert( "Howdy, " + value.toString() );
+    }
+
+    function add(firstValue, secondValue)
+    {
+      return firstValue + secondValue;
+    }
+
+    function add2()
+    {
+      var tempValue = 0;
+      for ( i=0; i<arguments.length; i++ )
+      {
+        tempValue += arguments[i]
+      }
+      return tempValue;
+    }
+
+    var addMe = function()
+    {
+      return arguments[0] + arguments[1];
+    }
+    //var myResult = add( 1, 2 ) + add2( 1, 2, 3, 4, 5 );
+    //alert( myResult );
+
+    //var myNewValue = addMe( 1, 2 );
+    //alert( myNewValue );
+
+
+    //anonimous function
+    /*
+    var myResult = (function()
+    {
+      return arguments[0] + arguments[1];
+    })( 1,2 );
+    alert( myResult );*/
+
+    alert( (function()
+    {
+      return arguments[0] + arguments[1];
+    })( 5,6 ) );
+
+  </script>
+</head>
+<!--<body onload="alert('Hello World!')">-->
+<body>
+  <h1>JavaScript Emample</h1>
+  <input type="submit" onclick="myNewFunction('fdsfs')"/>
+</body>
+</html>
