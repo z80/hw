@@ -63,3 +63,21 @@ if ( typeof planet.defence == "undefined" )
 }
 
 document.write( "<br/> " + z.defence );
+
+for ( member in planet)
+{
+  document.write( "<br/> " + member + " " + planet[member] );
+}
+
+function car( make, model, year )
+{
+  this.make  = make;
+  this.model = model;
+  this.year  = year;
+}
+
+var myCar = new car( "Eagle", "Talon TSi", 1993 );
+var myOtherCar = new car( "Dodge", "Dart", 1971 );
+
+alert( myCar.model );
+alert( myOtherCar.model );
